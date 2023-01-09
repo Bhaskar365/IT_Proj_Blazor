@@ -1,0 +1,73 @@
+﻿@page "/"
+
+@using Newtonsoft.Json;
+@using IT_Inventory_Project.Data
+@inject HttpClient Http
+<PageTitle>Home</PageTitle>
+
+<h3>IT Inventory Home</h3>
+
+<NavLink type="button" class="btn btn-secondary" href="addProductForm">Add New Data</NavLink>
+
+<div class="container-fluid">
+    <table class="table table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Owner Name</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (device_GetAll != null)
+            {
+                @foreach (var item in device_GetAll)
+                {
+                    <tr>
+                        <td>@item.DevType</td>
+                        <td>@item.Owner</td>
+                        <td>@item.Location</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" href="pages/productpages/editFormPage">Edit</button>
+                            <button type="button" class="btn btn-danger" href="pages/productpages/addProductForm">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code
+{
+    public int DevIdCount { get; set; } = 0;
+
+    List<Device_GetAll> device_GetAll = new List<Device_GetAll>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllData();
+    }
+
+    private async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+
+        };
+
+        string apiUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+
+        var httpResponse = await Http.PostAsync(apiUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse inventoryAPIResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+
+            device_GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(inventoryAPIResponse.Data);
+        }
+
+    }
+}
