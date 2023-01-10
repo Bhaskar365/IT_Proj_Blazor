@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace IT_Inventory_Project.Data
 {
-    public class Device_GetAll{
-
+    public class Device_Upd
+    {
         [Required]
         [JsonProperty("token")]
         public string Token { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("DevId")]
         public string DevId { get; set; }
 
@@ -83,5 +81,6 @@ namespace IT_Inventory_Project.Data
 
         [JsonProperty("DevStatus")]
         public string DevStatus { get; set; }
-    }
- }
+    
+}
+}

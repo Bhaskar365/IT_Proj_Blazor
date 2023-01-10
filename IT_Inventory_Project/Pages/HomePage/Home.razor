@@ -25,12 +25,14 @@
                 @foreach (var item in device_GetAll)
                 {
                     <tr>
+                        <td>@item.DevId</td>
                         <td>@item.DevType</td>
                         <td>@item.Owner</td>
                         <td>@item.Location</td>
                         <td>
-                            <button type="button" class="btn btn-primary" href="pages/productpages/editFormPage">Edit</button>
+                            <button type="button" class="btn btn-primary" href="./editFormPage/@item.DevId">Edit</button>
                             <button type="button" class="btn btn-danger" href="pages/productpages/addProductForm">Delete</button>
+                            <a href="./editFormPage/@item.DevId">Link</a>
                         </td>
                     </tr>
                 }
