@@ -4,15 +4,15 @@ using System.Text.Json.Serialization;
 
 namespace IT_Inventory_Project.Data
 {
-    public class Device_GetAll{
-
+    public class Device_GetAll
+    {
         [Required]
         [JsonProperty("token")]
         public string Token { get; set; } = string.Empty;
 
         [Required]
         [JsonProperty("DevId")]
-        public string DevId { get; set; }
+        public string DevId { get; set; } = string.Empty;
 
         [Required]
         [JsonProperty("DevType")]
@@ -44,27 +44,29 @@ namespace IT_Inventory_Project.Data
 
         [Required]
         [JsonProperty("PurchaseDate")]
-        public string PurchaseDate { get; set; }
+        public DateTime? PurchaseDate { get; set; }
 
         [Required]
         [JsonProperty("WarrantyExpDate")]
-        public string WarrantyExpDate { get; set; }
+        public DateTime? WarrantyExpDate { get; set; }
+
 
         [Required]
         [JsonProperty("ServiceExpDate")]
-        public string ServiceExpDate { get; set; }
+        public DateTime? ServiceExpDate { get; set; }
+
 
         [Required]
         [JsonProperty("Value")]
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
 
         [Required]
         [JsonProperty("Size")]
-        public string Size { get; set; }
+        public string Size { get; set; } = string.Empty;
 
         [Required]
         [JsonProperty("Toner")]
-        public string Toner { get; set; }
+        public string Toner { get; set; } = string.Empty;
 
         [Required]
         [JsonProperty("MacAddress")]

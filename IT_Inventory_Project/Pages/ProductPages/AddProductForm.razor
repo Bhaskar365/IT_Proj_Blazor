@@ -2,35 +2,39 @@
 @using IT_Inventory_Project.Data
 @using Newtonsoft.Json
 @inject HttpClient Http;
-
+@using System.ComponentModel.DataAnnotations;
 
 <div class="row my-2">
     <h3 class="card-title text-primary mb-3 ml-3">Add Details Page</h3>
 </div>
 
-@*<form method="post" action=""></form>
-    <EditForm Model="@GetAll" OnValidSubmit="AddNewData">
-*@
-
-<EditForm Model="@GetAll" OnValidSubmit="AddNewData">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
+<EditForm Model="@GetAll" OnValidSubmit="@AddNewData">
+    <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Token</label>
         <input type="text" class="form-control" placeholder="Token Key"
-                   aria-describedby="basic-addon1" @bind="GetAll.Token">
+                   aria-describedby="basic-addon1" @bind="@GetAll.Token">
         </input>
         <ValidationMessage For="()=>GetAll.Token"></ValidationMessage>
     </div>
 
+@*    <label for="exampleFormControlInput1" class="form-label">Select Device Type</label>
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Device Type" @bind="GetAll.DevType"
+                     aria-label="Default select example">
+        </input>
+        <ValidationMessage For="()=>GetAll.DevType"></ValidationMessage>
+    </div>*@
+
     <label for="exampleFormControlInput1" class="form-label">Select Device Type</label>
     <div class="mb-3">
-        <input class="form-select" @bind="GetAll.DevType"
+        <InputSelect class="form-select" @bind-Value="@GetAll.DevType"
                      aria-label="Default select example">
             @foreach (var option in DeviceOptions)
             {
                 <option value="@option.OptionValue">@option.OptionName</option>
             }
-        </input>
+        </InputSelect>
         <ValidationMessage For="()=>GetAll.DevType"></ValidationMessage>
     </div>
 
@@ -40,10 +44,10 @@
             Device Type Other
         </label>
         <input type="text"
-                   class="form-control"
-                   placeholder="Enter Your Device Type Other(If Any). Write NA if none.."
-                   aria-describedby="basic-addon1"
-                   @bind="GetAll.DevTypeOther">
+               class="form-control"
+               placeholder="Enter Your Device Type Other(If Any). Write NA if none.."
+               aria-describedby="basic-addon1"
+               @bind="@GetAll.DevTypeOther">
         </input>
         <ValidationMessage For="()=>GetAll.DevTypeOther"></ValidationMessage>
     </div>
@@ -51,7 +55,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Make</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Make"
-                   aria-describedby="basic-addon1" @bind="GetAll.Make">
+                   aria-describedby="basic-addon1" @bind="@GetAll.Make">
         </input>
         <ValidationMessage For="()=>GetAll.Make"></ValidationMessage>
     </div>
@@ -59,7 +63,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Model</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Model"
-                   aria-describedby="basic-addon1" @bind="GetAll.Model">
+                   aria-describedby="basic-addon1" @bind="@GetAll.Model">
         </input>
         <ValidationMessage For="()=>GetAll.Model"></ValidationMessage>
     </div>
@@ -67,7 +71,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Owner</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Owner"
-                   aria-describedby="basic-addon1" @bind="GetAll.Owner">
+                   aria-describedby="basic-addon1" @bind="@GetAll.Owner">
         </input>
         <ValidationMessage For="()=>GetAll.Owner"></ValidationMessage>
     </div>
@@ -75,7 +79,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Location</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Location"
-                   aria-describedby="basic-addon1" @bind="GetAll.Location">
+                   aria-describedby="basic-addon1" @bind="@GetAll.Location">
         </input>
         <ValidationMessage For="()=>GetAll.Location"></ValidationMessage>
     </div>
@@ -92,15 +96,15 @@
    <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Purchase Date</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Purchase Date"
-                   aria-describedby="basic-addon1" @bind="GetAll.PurchaseDate">
+                   aria-describedby="basic-addon1" @bind="@GetAll.PurchaseDate">
         </input>
         <ValidationMessage For="()=>GetAll.PurchaseDate"></ValidationMessage>
     </div>
 
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Warranty Expiry Date</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Warranty Expiry Date"
-                   aria-describedby="basic-addon1" @bind="GetAll.WarrantyExpDate">
+        <input type="datetime" class="form-control" placeholder="Enter Your Device Warranty Expiry Date"
+                   aria-describedby="basic-addon1" @bind="@GetAll.WarrantyExpDate">
         </input>
         <ValidationMessage For="()=>GetAll.WarrantyExpDate"></ValidationMessage>
     </div>
@@ -108,7 +112,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Service Expiry Date</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Service Expiry Date"
-                   aria-describedby="basic-addon1" @bind="GetAll.ServiceExpDate">
+                   aria-describedby="basic-addon1" @bind="@GetAll.ServiceExpDate">
         </input>
         <ValidationMessage For="()=>GetAll.ServiceExpDate"></ValidationMessage>
     </div>
@@ -116,7 +120,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Value</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Value"
-                     aria-describedby="basic-addon1" @bind="GetAll.Value">
+                     aria-describedby="basic-addon1" @bind="@GetAll.Value">
         </input>
         <ValidationMessage For="()=>GetAll.Value"></ValidationMessage>
     </div>
@@ -124,7 +128,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Size</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Size"
-                     aria-describedby="basic-addon1" @bind="GetAll.Size">
+                     aria-describedby="basic-addon1" @bind="@GetAll.Size">
         </input>
         <ValidationMessage For="()=>GetAll.Size"></ValidationMessage>
     </div>
@@ -132,7 +136,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Toner</label>
         <input type="text" class="form-control" placeholder="Enter Your Device Toner"
-                     aria-describedby="basic-addon1" @bind="GetAll.Toner">
+                     aria-describedby="basic-addon1" @bind="@GetAll.Toner">
         </input>
         <ValidationMessage For="()=>GetAll.Toner"></ValidationMessage>
     </div>
@@ -140,7 +144,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">MAC Address</label>
         <input type="text" class="form-control" placeholder="Enter Your Device MAC Address"
-                   aria-describedby="basic-addon1" @bind="GetAll.MacAddress">
+                   aria-describedby="basic-addon1" @bind="@GetAll.MacAddress">
         </input>
         <ValidationMessage For="()=>GetAll.MacAddress"></ValidationMessage>
     </div>
@@ -148,7 +152,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">IP Address</label>
         <input type="text" class="form-control" placeholder="Enter Your Device IP Address"
-                   aria-describedby="basic-addon1" @bind="GetAll.IPAddress">
+                   aria-describedby="basic-addon1" @bind="@GetAll.IPAddress">
         </input>
         <ValidationMessage For="()=>GetAll.IPAddress"></ValidationMessage>
     </div>
@@ -156,13 +160,13 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">CellPhone Number</label>
         <input type="text" class="form-control" placeholder="Enter Your Device CellPhone Number"
-                   aria-describedby="basic-addon1" @bind="GetAll.CellNumber">
+                   aria-describedby="basic-addon1" @bind="@GetAll.CellNumber">
         </input>
         <ValidationMessage For="()=>GetAll.CellNumber"></ValidationMessage>
     </div>
 
     <div class="form-group py-2">
-        <button type="submit" @onsubmit="AddNewData">Submit</button>
+       <button type="submit" class="btn btn-info" @onclick="AddNewData">Add New Data</button>
         <NavLink href="/" class="btn btn-secondary">Back to Home Page</NavLink>
     </div>
 
@@ -170,11 +174,13 @@
 
 @code {
 
+    private 
+
     Device_GetAll GetAll = new Device_GetAll();
 
-    protected override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
-        return AddNewData();
+
     }
 
     public async Task AddNewData() 
@@ -189,39 +195,36 @@
             new KeyValuePair<string, string>("Owner",GetAll.Owner),
             new KeyValuePair<string, string>("Location",GetAll.Location),
             new KeyValuePair<string, string>("Serial",GetAll.Serial),
-            new KeyValuePair<string, string>("PurchaseDate",GetAll.PurchaseDate),
-            new KeyValuePair<string, string>("WarrantyExpDate",GetAll.WarrantyExpDate),
-            new KeyValuePair<string, string>("ServiceExpDate",GetAll.ServiceExpDate),
+            new KeyValuePair<string, string>("PurchaseDate",GetAll.PurchaseDate.ToString()),
+            new KeyValuePair<string, string>("WarrantyExpDate",GetAll.WarrantyExpDate.ToString()),
+            new KeyValuePair<string, string>("ServiceExpDate",GetAll.ServiceExpDate.ToString()),
             new KeyValuePair<string, string>("Value",GetAll.Value),
             new KeyValuePair<string, string>("Size",GetAll.Size),
             new KeyValuePair<string, string>("Toner",GetAll.Toner),
             new KeyValuePair<string, string>("MacAddress",GetAll.MacAddress),
             new KeyValuePair<string, string>("IPAddress",GetAll.IPAddress),
             new KeyValuePair<string, string>("CellNumber",GetAll.CellNumber),
-    };
+     };
 
         string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Add";
-
         var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
 
         if (httpResponse.IsSuccessStatusCode)
         {
             InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
-
             GetAll = JsonConvert.DeserializeObject<Device_GetAll>(AddDataResponse.Data);
-            StateHasChanged();
         } 
     }   
 
     List<DeviceTypeOptions> DeviceOptions = new List<DeviceTypeOptions>()
     {
         new DeviceTypeOptions() {  OptionName = "Select...", OptionValue = " " },
-        new DeviceTypeOptions() {  OptionName = "Laptop/Desktop", OptionValue = "1" },
-        new DeviceTypeOptions() {  OptionName = "Misc", OptionValue = "2" },
-        new DeviceTypeOptions() {  OptionName = "Mobile Phone", OptionValue = "3" },
-        new DeviceTypeOptions() {  OptionName = "Monitor", OptionValue = "4" },
-        new DeviceTypeOptions() {  OptionName = "Polycom", OptionValue = "5" },
-        new DeviceTypeOptions() {  OptionName = "Printer", OptionValue = "6" },
-        new DeviceTypeOptions() {  OptionName = "Server", OptionValue = "7" },
+        new DeviceTypeOptions() {  OptionName = "Laptop/Desktop", OptionValue = "Laptop/Desktop" },
+        new DeviceTypeOptions() {  OptionName = "Misc", OptionValue = "Misc" },
+        new DeviceTypeOptions() {  OptionName = "Mobile Phone", OptionValue = "Mobile Phone" },
+        new DeviceTypeOptions() {  OptionName = "Monitor", OptionValue = "Monitor" },
+        new DeviceTypeOptions() {  OptionName = "Polycom", OptionValue = "Polycom" },
+        new DeviceTypeOptions() {  OptionName = "Printer", OptionValue = "Printer" },
+        new DeviceTypeOptions() {  OptionName = "Server", OptionValue = "Server" },
     };
 }
