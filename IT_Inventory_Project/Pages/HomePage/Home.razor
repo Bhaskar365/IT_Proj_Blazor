@@ -30,9 +30,8 @@
                         <td>@item.Owner</td>
                         <td>@item.Location</td>
                         <td>
-                            <button type="button" class="btn btn-primary" href="./editFormPage/@item.DevId">Edit</button>
+                            <NavLink class="btn btn-primary" href="@($"./editFormPage/{item.DevId}")">Edit</NavLink>
                             <button type="button" class="btn btn-danger" href="pages/productpages/addProductForm">Delete</button>
-                            <a href="./editFormPage/@item.DevId">Link</a>
                         </td>
                     </tr>
                 }
