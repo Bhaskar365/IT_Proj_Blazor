@@ -5,75 +5,75 @@ namespace IT_Inventory_Project.Data
 {
     public class Device_Upd
     {
-        [Required]
         [JsonProperty("token")]
+        [Required]
         public string Token { get; set; } = string.Empty;
 
         [JsonProperty("DevId")]
         public string DevId { get; set; }
 
-        [Required]
         [JsonProperty("DevType")]
+        [Required]
         public string DevType { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("DevTypeOther")]
+        [Required]
         public string DevTypeOther { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Make")]
-        public string Make { get; set; } = string.Empty;
-
         [Required]
+        public string Make { get; set; } = string.Empty;
+        
         [JsonProperty("Model")]
+        [Required]
         public string Model { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Owner")]
+        [Required]
         public string Owner { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Location")]
+        [Required]
         public string Location { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Serial")]
+        [Required]
         public string Serial { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("PurchaseDate")]
+        [Required]
         public string PurchaseDate { get; set; }
 
-        [Required]
         [JsonProperty("WarrantyExpDate")]
+        [Required]
         public string WarrantyExpDate { get; set; }
 
-        [Required]
         [JsonProperty("ServiceExpDate")]
+        [Required]
         public string ServiceExpDate { get; set; }
 
-        [Required]
         [JsonProperty("Value")]
+        [Required]
         public string Value { get; set; }
 
-        [Required]
         [JsonProperty("Size")]
+        [Required]
         public string Size { get; set; }
 
-        [Required]
         [JsonProperty("Toner")]
+        [Required]
         public string Toner { get; set; }
-
-        [Required]
+        
         [JsonProperty("MacAddress")]
+        [Required]
         public string MacAddress { get; set; } = string.Empty;
-
-        [Required]
+        
         [JsonProperty("IPAddress")]
-        public string IPAddress { get; set; } = string.Empty;
-
         [Required]
+        public string IPAddress { get; set; } = string.Empty;
+        
         [JsonProperty("CellNumber")]
+        [Required]
         public string CellNumber { get; set; } = string.Empty;
 
         [JsonProperty("UpdDate")]

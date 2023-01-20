@@ -1,0 +1,141 @@
+﻿@page "/view/{DevId}"
+@using IT_Inventory_Project.Data
+@using Newtonsoft.Json
+@inject HttpClient Http
+
+<h3>ViewProductForm</h3>
+
+<form>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">DEV ID</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" @bind-value="@GetAll.DevId" disabled />
+    </div>
+    
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE TYPE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.DevType" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE TYPE OTHER</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.DevTypeOther" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE MAKE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Make" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE MODEL</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Model" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE OWNER</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Owner" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE LOCATION</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Location" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE SERIAL</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Serial" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE PURCHASE DATE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.PurchaseDate" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE WARRANTY EXPIRY DATE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.WarrantyExpDate" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE SERVICE EXPIRY DATE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.ServiceExpDate" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE VALUE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Value" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE SIZE</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Size" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE TONER</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.Toner" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE MAC ADDRESS</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.MacAddress" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE IP ADDRESS</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.IPAddress" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">DEVICE CELLPHONE NUMBER</label>
+        <input type="text" class="form-control" @bind-value="@GetAll.CellNumber" disabled />
+    </div>
+
+</form>
+
+
+
+@code {
+
+    [Parameter]
+    public string DevId { get; set; }
+
+    Device_GetAll GetAll = new Device_GetAll();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllData();
+    }
+
+    public async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
+            new KeyValuePair<string,string>("DevId",DevId )
+
+    };
+
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Get";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<Device_GetAll>(AddDataResponse.Data);
+
+        }
+    }
+
+    List<DeviceTypeOptions> DeviceOptions = new List<DeviceTypeOptions>()
+    {
+        new DeviceTypeOptions() {  OptionName = "Select...", OptionValue = " " },
+        new DeviceTypeOptions() {  OptionName = "Laptop/Desktop", OptionValue = "Laptop/Desktop" },
+        new DeviceTypeOptions() {  OptionName = "Misc", OptionValue = "Misc" },
+        new DeviceTypeOptions() {  OptionName = "Mobile Phone", OptionValue = "Mobile Phone" },
+        new DeviceTypeOptions() {  OptionName = "Monitor", OptionValue = "Monitor" },
+        new DeviceTypeOptions() {  OptionName = "Polycom", OptionValue = "Polycom" },
+        new DeviceTypeOptions() {  OptionName = "Printer", OptionValue = "Printer" },
+        new DeviceTypeOptions() {  OptionName = "Server", OptionValue = "Server" },
+    };
+}

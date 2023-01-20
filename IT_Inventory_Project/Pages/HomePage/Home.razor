@@ -3,16 +3,24 @@
 @using Newtonsoft.Json;
 @using IT_Inventory_Project.Data
 @inject HttpClient Http
+@inject NavigationManager navigation
+
 <PageTitle>Home</PageTitle>
 
 <h3>IT Inventory Home</h3>
 
-<NavLink type="button" class="btn btn-secondary" href="addProductForm">Add New Data</NavLink>
+<div class="container-fluid">
+    <div>
+        <button type="button" class="btn btn-secondary" @onclick="GoToAddForm">Add New Data</button>
+    </div>
+    
+</div>
 
 <div class="container-fluid">
     <table class="table table-condensed table-bordered">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Product Name</th>
                 <th>Owner Name</th>
                 <th>Location</th>
@@ -20,9 +28,9 @@
             </tr>
         </thead>
         <tbody>
-            @if (device_GetAll != null)
+            @if (GetAll != null)
             {
-                @foreach (var item in device_GetAll)
+                @foreach (var item in GetAll)
                 {
                     <tr>
                         <td>@item.DevId</td>
@@ -30,8 +38,10 @@
                         <td>@item.Owner</td>
                         <td>@item.Location</td>
                         <td>
+                            <NavLink class="btn btn-dark" href=@($"/view/{item.DevId}")>View</NavLink>
                             <NavLink class="btn btn-primary" href="@($"./editFormPage/{item.DevId}")">Edit</NavLink>
                             <button type="button" class="btn btn-danger" href="pages/productpages/addProductForm">Delete</button>
+                            
                         </td>
                     </tr>
                 }
@@ -40,35 +50,38 @@
     </table>
 </div>
 
+
 @code
 {
-    public int DevIdCount { get; set; } = 0;
-
-    List<Device_GetAll> device_GetAll = new List<Device_GetAll>();
+    List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
     protected override async Task OnInitializedAsync()
     {
         await GetAllData();
     }
 
-    private async Task GetAllData()
+    public async Task GetAllData()
     {
         var tokenKey = new[]
         {
             new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
 
-        };
+    };
 
-        string apiUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
-
-        var httpResponse = await Http.PostAsync(apiUrl, new FormUrlEncodedContent(tokenKey));
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
 
         if (httpResponse.IsSuccessStatusCode)
         {
-            InventoryAPIResponse inventoryAPIResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
 
-            device_GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(inventoryAPIResponse.Data);
         }
-
     }
+
+    public void GoToAddForm()
+    {
+        navigation.NavigateTo("addProductForm");
+    }
+
 }

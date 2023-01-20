@@ -6,78 +6,79 @@ namespace IT_Inventory_Project.Data
 {
     public class Device_GetAll
     {
-        [Required]
+        
         [JsonProperty("token")]
+        [Required]
         public string Token { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("DevId")]
+        [Required]
         public string DevId { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("DevType")]
+        [Required]
         public string DevType { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("DevTypeOther")]
+        [Required]
         public string DevTypeOther { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Make")]
+        [Required]
         public string Make { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Model")]
+        [Required]
         public string Model { get; set; } = string.Empty;
 
-        [Required]
+        
         [JsonProperty("Owner")]
+        [Required]
         public string Owner { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Location")]
+        [Required]
         public string Location { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Serial")]
+        [Required]
         public string Serial { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("PurchaseDate")]
+        [Required]
         public DateTime? PurchaseDate { get; set; }
 
-        [Required]
         [JsonProperty("WarrantyExpDate")]
+        [Required]
         public DateTime? WarrantyExpDate { get; set; }
 
-
-        [Required]
         [JsonProperty("ServiceExpDate")]
+        [Required]
         public DateTime? ServiceExpDate { get; set; }
 
-
-        [Required]
         [JsonProperty("Value")]
+        [Required]
         public string Value { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Size")]
+        [Required]
         public string Size { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("Toner")]
+        [Required]
         public string Toner { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("MacAddress")]
+        [Required]
         public string MacAddress { get; set; } = string.Empty;
 
-        [Required]
+       
         [JsonProperty("IPAddress")]
+        [Required]
         public string IPAddress { get; set; } = string.Empty;
 
-        [Required]
         [JsonProperty("CellNumber")]
+        [Required]
         public string CellNumber { get; set; } = string.Empty;
 
         [JsonProperty("UpdDate")]

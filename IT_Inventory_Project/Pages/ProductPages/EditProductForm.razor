@@ -3,6 +3,7 @@
 @using Newtonsoft.Json
 @inject HttpClient Http;
 @using System.ComponentModel.DataAnnotations;
+@inject NavigationManager navigate
 
 <div class="row my-2">
     <h3 class="card-title text-primary mb-3 ml-3">Edit Page</h3>
@@ -13,7 +14,7 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Token</label>
         <input type="text" class="form-control" placeholder="Token Key"
-                   aria-describedby="basic-addon1" @bind="@GetAll.Token">
+                   aria-describedby="basic-addon1" @bind="GetAll.Token" >
         </input>
         <ValidationMessage For="()=>GetAll.Token"></ValidationMessage>
     </div>
@@ -177,7 +178,7 @@
     [Parameter]
     public int Id { get; set; }
 
-    Device_GetAll GetAll = new Device_GetAll();
+    Device_Upd GetAll = new Device_Upd();
 
     public async Task UpdateExistingData()
     {
@@ -187,7 +188,7 @@
             new KeyValuePair<string, string>("DevId",GetAll.DevId),
             new KeyValuePair<string, string>("DevType",GetAll.DevType),
             new KeyValuePair<string, string>("DevTypeOther",GetAll.DevTypeOther),
-            new KeyValuePair<string, string>("Make",GetAll.Make),
+            new KeyValuePair<string, string>("Make",GetAll.Make),              
             new KeyValuePair<string, string>("Model",GetAll.Model),
             new KeyValuePair<string, string>("Owner",GetAll.Owner),
             new KeyValuePair<string, string>("Location",GetAll.Location),
@@ -208,8 +209,10 @@
 
         if (httpResponse.IsSuccessStatusCode)
         {
-            //InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
-            //GetAll = JsonConvert.DeserializeObject<Device_GetAll>(AddDataResponse.Data);
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<Device_Upd>(AddDataResponse.Data);
+            StateHasChanged();
+            navigate.NavigateTo("/");
         }
 
     }
@@ -225,8 +228,6 @@
         new DeviceTypeOptions() {  OptionName = "Printer", OptionValue = "Printer" },
         new DeviceTypeOptions() {  OptionName = "Server", OptionValue = "Server" },
     };
-
-   
 
 
 }
