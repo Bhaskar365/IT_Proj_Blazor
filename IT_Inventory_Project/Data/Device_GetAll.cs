@@ -6,14 +6,13 @@ namespace IT_Inventory_Project.Data
 {
     public class Device_GetAll
     {
-        
+
         [JsonProperty("token")]
         [Required]
         public string Token { get; set; } = string.Empty;
 
         [JsonProperty("DevId")]
-        [Required]
-        public string DevId { get; set; } = string.Empty;
+        public string DevId { get; set; }
 
         [JsonProperty("DevType")]
         [Required]
@@ -31,7 +30,6 @@ namespace IT_Inventory_Project.Data
         [Required]
         public string Model { get; set; } = string.Empty;
 
-        
         [JsonProperty("Owner")]
         [Required]
         public string Owner { get; set; } = string.Empty;
@@ -46,33 +44,32 @@ namespace IT_Inventory_Project.Data
 
         [JsonProperty("PurchaseDate")]
         [Required]
-        public DateTime? PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         [JsonProperty("WarrantyExpDate")]
         [Required]
-        public DateTime? WarrantyExpDate { get; set; }
+        public DateTime WarrantyExpDate { get; set; }
 
         [JsonProperty("ServiceExpDate")]
         [Required]
-        public DateTime? ServiceExpDate { get; set; }
+        public DateTime ServiceExpDate { get; set; }
 
         [JsonProperty("Value")]
         [Required]
-        public string Value { get; set; } = string.Empty;
+        public string Value { get; set; }
 
         [JsonProperty("Size")]
         [Required]
-        public string Size { get; set; } = string.Empty;
+        public string Size { get; set; }
 
         [JsonProperty("Toner")]
         [Required]
-        public string Toner { get; set; } = string.Empty;
+        public string Toner { get; set; }
 
         [JsonProperty("MacAddress")]
         [Required]
         public string MacAddress { get; set; } = string.Empty;
 
-       
         [JsonProperty("IPAddress")]
         [Required]
         public string IPAddress { get; set; } = string.Empty;
@@ -86,5 +83,6 @@ namespace IT_Inventory_Project.Data
 
         [JsonProperty("DevStatus")]
         public string DevStatus { get; set; }
+
     }
  }

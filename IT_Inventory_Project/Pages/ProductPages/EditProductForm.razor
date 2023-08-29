@@ -1,207 +1,295 @@
-﻿@page "/editFormPage/{Id:int}";
+﻿@page "/editFormPage/{DevId}";
 @using IT_Inventory_Project.Data
 @using Newtonsoft.Json
 @inject HttpClient Http;
 @using System.ComponentModel.DataAnnotations;
-@inject NavigationManager navigate
+@inject NavigationManager navigate;
+@inject IJSRuntime JSRuntime;
 
 <div class="row my-2">
     <h3 class="card-title text-primary mb-3 ml-3">Edit Page</h3>
 </div>
 
-<EditForm Model="@GetAll" OnValidSubmit="@UpdateExistingData">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <div class="mb-3">
+<EditForm Model="@GetDataFromID" OnValidSubmit="UpdateFunction">
+      <DataAnnotationsValidator></DataAnnotationsValidator>     
+
+      <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Token</label>
-        <input type="text" class="form-control" placeholder="Token Key"
-                   aria-describedby="basic-addon1" @bind="GetAll.Token" >
+        <input class="form-control" placeholder="Token"
+               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.Token">
         </input>
-        <ValidationMessage For="()=>GetAll.Token"></ValidationMessage>
+        <ValidationMessage For="()=>GetDataFromID.Token"></ValidationMessage>
     </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Dev ID</label>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Device ID</label>
         <input disabled class="form-control" placeholder="Dev ID"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.DevId">
+               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.DevId">
         </input>
-        <ValidationMessage For="()=>GetAll.DevId"></ValidationMessage>
-    </div>
-
-    <label for="exampleFormControlInput1" class="form-label">Select Device Type</label>
-    <div class="mb-3">
-        <InputSelect class="form-select" @bind-Value="@GetAll.DevType"
-                     aria-label="Default select example">
-            @foreach (var option in DeviceOptions)
-            {
-                <option value="@option.OptionValue">@option.OptionName</option>
-            }
-        </InputSelect>
-        <ValidationMessage For="()=>GetAll.DevType"></ValidationMessage>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1"
-               class="form-label">
-            Device Type Other
-        </label>
-        <input type="text"
-                   class="form-control"
-                   placeholder="Enter Your Device Type Other(If Any). Write NA if none.."
-                   aria-describedby="basic-addon1"
-               @bind-value="@GetAll.DevTypeOther">
-        </input>
-        <ValidationMessage For="()=>GetAll.DevTypeOther"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Type</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Type"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevType">
+                @foreach (var option in DeviceOptions)
+                {
+                    <option value="@option.OptionValue">@option.OptionName</option>
+                }
+            </InputText>
+            <ValidationMessage For="()=>GetDataFromID.DevType"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Make</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Make"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.Make">
-        </input>
-        <ValidationMessage For="()=>GetAll.Make"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Type Other</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Type Other"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevTypeOther"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.DevTypeOther"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Model</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Model"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.Model">
-        </input>
-        <ValidationMessage For="()=>GetAll.Model"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Make</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Make"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Make"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Make"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Owner</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Owner"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.Owner">
-        </input>
-        <ValidationMessage For="()=>GetAll.Owner"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Model</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Model"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Model"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Model"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Location</label>
-        <InputText type="text" class="form-control" placeholder="Enter Your Device Location"
-                   aria-describedby="basic-addon1" @bind-Value="@GetAll.Location">
-        </InputText>
-        <ValidationMessage For="()=>GetAll.Location"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Owner</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Owner"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Owner"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Owner"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Serial</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Serial Number"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.Serial">
-        </input>
-        <ValidationMessage For="()=>GetAll.Serial"></ValidationMessage>
-    </div>
-
-
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Purchase Date</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Purchase Date"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.PurchaseDate">
-        </input>
-        <ValidationMessage For="()=>GetAll.PurchaseDate"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Location</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Location"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Location"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Location"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Warranty Expiry Date</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Warranty Expiry Date"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.WarrantyExpDate">
-        </input>
-        <ValidationMessage For="()=>GetAll.WarrantyExpDate"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Serial</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Serial"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Serial"></InputText>
+           <ValidationMessage For="()=>GetDataFromID.Serial"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Service Expiry Date</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Service Expiry Date"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.ServiceExpDate">
-        </input>
-        <ValidationMessage For="()=>GetAll.ServiceExpDate"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Purchase Date</label>
+        <div>
+            <InputDate class="form-control" placeholder="Device Purchase Date"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.PurchaseDate"></InputDate>
+            <ValidationMessage For="()=>GetDataFromID.PurchaseDate"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Value</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Value"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.Value">
-        </input>
-        <ValidationMessage For="()=>GetAll.Value"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Warranty Expiry Date</label>
+        <div>
+            <InputDate class="form-control" placeholder="Device Warranty Exp. Date"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.WarrantyExpDate"></InputDate>
+            <ValidationMessage For="()=>GetDataFromID.WarrantyExpDate"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Size</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Size"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.Size">
-        </input>
-        <ValidationMessage For="()=>GetAll.Size"></ValidationMessage>
+    <label for="exampleFormControlInput1" class="form-label">Device Service Expiry Date</label>
+        <div>
+            <InputDate class="form-control" placeholder="Device Service Exp. Date"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.ServiceExpDate"></InputDate>
+            <ValidationMessage For="()=>GetDataFromID.ServiceExpDate"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Toner</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device Toner"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.Toner">
-        </input>
-        <ValidationMessage For="()=>GetAll.Toner"></ValidationMessage>
+    <label for="exampleFormControlInput1" class="form-label">Device Value</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Value"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Value"></InputText>
+         <ValidationMessage For="()=>GetDataFromID.Value"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">MAC Address</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device MAC Address"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.MacAddress">
-        </input>
-        <ValidationMessage For="()=>GetAll.MacAddress"></ValidationMessage>
+    <label for="exampleFormControlInput1" class="form-label">Device Size</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Size"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Size"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Size"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">IP Address</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device IP Address"
-                   aria-describedby="basic-addon1" @bind-value="@GetAll.IPAddress">
-        </input>
-        <ValidationMessage For="()=>GetAll.IPAddress"></ValidationMessage>
+        <label for="exampleFormControlInput1" class="form-label">Device Toner</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Toner"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Toner"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.Toner"></ValidationMessage>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">CellPhone Number</label>
-        <input type="text" class="form-control" placeholder="Enter Your Device CellPhone Number"
-               aria-describedby="basic-addon1" @bind-value="@GetAll.CellNumber">
-        </input>
-        <ValidationMessage For="()=>GetAll.CellNumber"></ValidationMessage>
+    <label for="exampleFormControlInput1" class="form-label">Device MacAddress</label>
+        <div>
+            <InputText class="form-control" placeholder="Device MAC Address"
+                       aria-describedby="basic-addon1"  @bind-Value="@GetDataFromID.MacAddress"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.MacAddress"></ValidationMessage>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Device IPAddress</label>
+        <div>
+            <InputText class="form-control" placeholder="Device IP Address"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.IPAddress"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.IPAddress"></ValidationMessage>
+        </div>
+    </div>
+
+     <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Device CellNumber</label>
+        <div>
+            <InputText class="form-control" placeholder="Device Cell Number"
+                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.CellNumber"></InputText>
+            <ValidationMessage For="()=>GetDataFromID.CellNumber"></ValidationMessage>
+        </div>
     </div>
 
     <div class="form-group py-2">
-        <button type="submit" class="btn btn-warning" @onsubmit="UpdateExistingData">Update</button>
-        <NavLink href="Pages/Project/Services/placeholderData" class="btn btn-secondary">Back to Home Page</NavLink>
+        <button type="submit" class="btn btn-warning">Update Data</button>
+        <button type="button" class="btn btn-danger" @onclick="@(()=>showDelete(GetDataFromID.DevId))">Delete Data</button>
+        <NavLink href="/" class="btn btn-secondary">Go Back</NavLink>
     </div>
 
 </EditForm>
 
+@if(Show)
+{
+    <div class="modal" tabindextabindex="-1" style="display:block;background:rgba(205,205,205,0.5);" role="dialog">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document"> 
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete</h4>
+                </div>
+
+                <div class="modal-body">
+                    <span>Are you sure you want to delete the record</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="ClosePopUp">No</button>
+                    <button type="button" class="btn btn-danger" @onclick="()=>Confirmation(true)">Yes</button>
+                </div>
+            </div>
+        </div>   
+    </div>
+}
+
 @code {
+    public void showDelete(string DevID) 
+    {
+        DevID = DevId;
+        Show = true;
+    }
+
+    public bool Show = false;
 
     [Parameter]
-    public int Id { get; set; }
+    public string DevId { get; set; }
 
     Device_Upd GetAll = new Device_Upd();
+    Device_Upd GetDataFromID = new Device_Upd();
 
-    public async Task UpdateExistingData()
+    public async Task Confirmation(bool value) 
+    {
+        Show = false;
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
+            new KeyValuePair<string, string>("DevId",DevId.ToString())
+    };
+
+        string deleteApi = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Del";
+
+        var httpResponse = await Http.PostAsync(deleteApi,new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse inventoryAPIResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            await Task.Run(() => JSRuntime.InvokeVoidAsync("alert",$"'{inventoryAPIResponse.Data}'"));
+            navigate.NavigateTo("/",true);
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetDataById();
+    }
+
+    public async Task GetDataById()
+    {
+        var token1 = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
+            new KeyValuePair<string,string>("DevId",DevId)
+    };
+        string URL = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Get";
+        var DeviceGetResponse = await Http.PostAsync(URL, new FormUrlEncodedContent(token1));
+
+        if (DeviceGetResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse res = JsonConvert.DeserializeObject<InventoryAPIResponse>(await DeviceGetResponse.Content.ReadAsStringAsync());
+            GetDataFromID = JsonConvert.DeserializeObject<Device_Upd>(res.Data);
+
+        }
+
+    }
+
+    public async Task UpdateFunction()
     {
         var tokenKey = new[]
-       {
+      {
             new KeyValuePair<string, string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
-            new KeyValuePair<string, string>("DevId",GetAll.DevId),
-            new KeyValuePair<string, string>("DevType",GetAll.DevType),
-            new KeyValuePair<string, string>("DevTypeOther",GetAll.DevTypeOther),
-            new KeyValuePair<string, string>("Make",GetAll.Make),              
-            new KeyValuePair<string, string>("Model",GetAll.Model),
-            new KeyValuePair<string, string>("Owner",GetAll.Owner),
-            new KeyValuePair<string, string>("Location",GetAll.Location),
-            new KeyValuePair<string, string>("Serial",GetAll.Serial),
-            new KeyValuePair<string, string>("PurchaseDate",GetAll.PurchaseDate.ToString()),
-            new KeyValuePair<string, string>("WarrantyExpDate",GetAll.WarrantyExpDate.ToString()),
-            new KeyValuePair<string, string>("ServiceExpDate",GetAll.ServiceExpDate.ToString()),
-            new KeyValuePair<string, string>("Value",GetAll.Value),
-            new KeyValuePair<string, string>("Size",GetAll.Size),
-            new KeyValuePair<string, string>("Toner",GetAll.Toner),
-            new KeyValuePair<string, string>("MacAddress",GetAll.MacAddress),
-            new KeyValuePair<string, string>("IPAddress",GetAll.IPAddress),
-            new KeyValuePair<string, string>("CellNumber",GetAll.CellNumber),
+            new KeyValuePair<string, string>("DevId",GetDataFromID.DevId),
+            new KeyValuePair<string, string>("DevType",GetDataFromID.DevType),
+            new KeyValuePair<string, string>("DevTypeOther",GetDataFromID.DevTypeOther),
+            new KeyValuePair<string, string>("Make",GetDataFromID.Make),
+            new KeyValuePair<string, string>("Model",GetDataFromID.Model),
+            new KeyValuePair<string, string>("Owner",GetDataFromID.Owner),
+            new KeyValuePair<string, string>("Location",GetDataFromID.Location),
+            new KeyValuePair<string, string>("Serial",GetDataFromID.Serial),
+            new KeyValuePair<string, string>("PurchaseDate",GetDataFromID.PurchaseDate.ToString("MM/dd/yyyy HH:mm:ss")),
+            new KeyValuePair<string, string>("WarrantyExpDate",GetDataFromID.WarrantyExpDate.ToString("MM/dd/yyyy HH:mm:ss")),
+            new KeyValuePair<string, string>("ServiceExpDate",GetDataFromID.ServiceExpDate.ToString("MM/dd/yyyy HH:mm:ss")),
+            new KeyValuePair<string, string>("Value",GetDataFromID.Value),
+            new KeyValuePair<string, string>("Size",GetDataFromID.Size),
+            new KeyValuePair<string, string>("Toner",GetDataFromID.Toner),
+            new KeyValuePair<string, string>("MacAddress",GetDataFromID.MacAddress),
+            new KeyValuePair<string, string>("IPAddress",GetDataFromID.IPAddress),
+            new KeyValuePair<string, string>("CellNumber",GetDataFromID.CellNumber),
      };
 
         string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Upd";
@@ -211,10 +299,10 @@
         {
             InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
             GetAll = JsonConvert.DeserializeObject<Device_Upd>(AddDataResponse.Data);
-            StateHasChanged();
-            navigate.NavigateTo("/");
+            await Task.Run(() => JSRuntime.InvokeVoidAsync("alert", $"'{AddDataResponse.Data}'"));
+            Console.WriteLine(AddDataResponse.Data);
+            navigate.NavigateTo("/", true);
         }
-
     }
 
     List<DeviceTypeOptions> DeviceOptions = new List<DeviceTypeOptions>()
@@ -229,5 +317,9 @@
         new DeviceTypeOptions() {  OptionName = "Server", OptionValue = "Server" },
     };
 
+       public void ClosePopUp()
+    {
+        Show = false;
+    }
 
 }

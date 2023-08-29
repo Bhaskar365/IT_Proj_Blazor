@@ -2,24 +2,54 @@
 
 @using Newtonsoft.Json;
 @using IT_Inventory_Project.Data
+
 @inject HttpClient Http
 @inject NavigationManager navigation
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Home</PageTitle>
 
 <h3>IT Inventory Home</h3>
 
+@if (Show) 
+{
+    <div class="modal" tabindex="-1" style="display:block;background:rgba(205, 205, 205, 0.5);" role="dialog">
+
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete</h4>
+                </div>
+
+                <div class="modal-body">
+                   Are you sure you want to delete the record
+                   <span>@DeviceId</span>?
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="ClosePopUp">No</button>
+                    <button type="button" class="btn btn-danger" @onclick="() => Confirmation(true)">Yes</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
 <div class="container-fluid">
     <div>
-        <button type="button" class="btn btn-secondary" @onclick="GoToAddForm">Add New Data</button>
+        <button type="button" class="btn btn-primary" @onclick="GoToAddForm">Add New Data</button>
     </div>
-    
 </div>
 
 <div class="container-fluid">
     <table class="table table-condensed table-bordered">
         <thead>
-            <tr>
+            <tr style="background-color:#003082;color:white;">
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Owner Name</th>
@@ -38,9 +68,9 @@
                         <td>@item.Owner</td>
                         <td>@item.Location</td>
                         <td>
-                            <NavLink class="btn btn-dark" href=@($"/view/{item.DevId}")>View</NavLink>
-                            <NavLink class="btn btn-primary" href="@($"./editFormPage/{item.DevId}")">Edit</NavLink>
-                            <button type="button" class="btn btn-danger" href="pages/productpages/addProductForm">Delete</button>
+                            <a id="viewBtnTag" class="btn btn-dark" href=@($"/view/{item.DevId}")>View</a>
+                            <a id="editBtnTag" class="btn btn-primary" href="@($"./editFormPage/{item.DevId}")">Edit</a>
+                            <button id="deleteBtn" type="button" class="btn btn-danger" @onclick="@(()=>showDelete(@item.DevId))">Delete</button>
                             
                         </td>
                     </tr>
@@ -53,7 +83,49 @@
 
 @code
 {
+
+    public string? DeviceId;
+    public bool Show = false;
+
+
+    public void ClosePopUp()
+    {
+        Show = false;
+    }
+
+    public void showDelete(string DevId) 
+    {
+        DeviceId = DevId;
+        Show = true;
+    }
+
+    public async Task Confirmation(bool value) 
+    {
+        Show = false;
+        var tokenKey = new[]
+        {
+             new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
+            new KeyValuePair<string,string>("DevId",DeviceId.ToString())
+    };
+
+        string deleteUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_Del";
+
+        var httpResponse = await Http.PostAsync(deleteUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode) 
+        {
+            InventoryAPIResponse inventoryAPIResponseData = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+
+            await Task.Run(() => JSRuntime.InvokeVoidAsync("alert", $"'{inventoryAPIResponseData.Msg}','{inventoryAPIResponseData.Total}'"));
+            navigation.NavigateTo("/", true);
+        }
+
+    }
+
+
     List<Device_GetAll> GetAll = new List<Device_GetAll>();
+
+    
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,22 +134,24 @@
 
     public async Task GetAllData()
     {
-        var tokenKey = new[]
-        {
-            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+            var tokenKey = new[]
+           {
+                new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
 
-    };
+        };
 
-        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
-        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+            string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+            var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
 
-        if (httpResponse.IsSuccessStatusCode)
-        {
-            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
-            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+                GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
 
+            }
         }
-    }
+
+    
 
     public void GoToAddForm()
     {

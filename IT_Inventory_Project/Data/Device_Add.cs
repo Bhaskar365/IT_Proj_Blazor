@@ -3,15 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IT_Inventory_Project.Data
 {
-    public class Device_Upd
+    public class Device_Add
     {
-
+        
         [JsonProperty("token")]
         [Required]
         public string Token { get; set; } = string.Empty;
-
-        [JsonProperty("DevId")]
-        public string DevId { get; set; }
 
         [JsonProperty("DevType")]
         [Required]
@@ -43,15 +40,15 @@ namespace IT_Inventory_Project.Data
 
         [JsonProperty("PurchaseDate")]
         [Required]
-        public DateTime PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; } = DateTime.Now;
 
         [JsonProperty("WarrantyExpDate")]
         [Required]
-        public DateTime WarrantyExpDate { get; set; }
+        public DateTime WarrantyExpDate { get; set; } = DateTime.Now;
 
         [JsonProperty("ServiceExpDate")]
         [Required]
-        public DateTime ServiceExpDate { get; set; }
+        public DateTime ServiceExpDate { get; set; } = DateTime.Now;
 
         [JsonProperty("Value")]
         [Required]

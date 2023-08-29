@@ -1,0 +1,173 @@
+﻿
+@media screen and (max-width:919px){
+
+    #viewBtnTag {
+        min-width:3em;
+        padding:0.40em !important;
+        margin-left:0.1em;
+        margin-right:0.1em;
+        cursor:pointer;
+
+    }
+    #editBtnTag{
+       /* min-width*/
+    }
+
+    #deleteBtn {
+        min-width: 3em;
+        padding: 0.40em !important;
+        margin-left: 0.1em;
+        margin-right: 0.1em;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width:902px) 
+{
+    #deleteBtn 
+    {
+        width:3.69em;
+        cursor:pointer;
+    }
+    #editBtnTag {
+        width: 3.2em;
+    }
+    #viewBtnTag {
+        min-width: 3em;
+        padding: 0.40em !important;
+        margin-left: 0.1em;
+        margin-right: 0.1em;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width:900px) 
+{
+    #deleteBtn {
+        width: 3.3em;
+        padding-left: 0.2em !important; 
+    }
+
+    #editBtnTag {
+        width: 3em;
+        text-align:center;
+        padding-left:0.6em;
+    }
+
+    #viewBtnTag {
+        min-width: 2.5em;
+    }
+}
+
+@media screen and (max-width:890px) 
+{
+    #deleteBtn {
+        width: 3.2em;
+        padding-left: 0.1em !important;
+    }
+
+    #editBtnTag {
+        width: 2.7em;
+        text-align: center;
+        padding-left: 0.4em;
+    }
+
+    #viewBtnTag {
+        min-width: 2.6em;
+        text-align: center;
+        padding-left: 0.4em !important;
+    }
+}
+
+@media screen and (max-width:885px) 
+{
+    #deleteBtn {
+        width: 3.2em !important;
+        padding-left: 0.1em !important;
+        font-size:medium;
+    }
+
+    #editBtnTag {
+        width: 2.2em !important;
+        text-align: center;
+        padding-left: 0.2em;
+    }
+
+    #viewBtnTag {
+        width: 2em;
+        text-align: center;
+        padding-left: 3px !important;
+    }
+}
+
+@media screen and (max-width:870px) 
+{
+    #deleteBtn {
+        width: 3.1em !important;
+        padding-left: 0.1em !important;
+        font-size: medium;
+    }
+
+    #editBtnTag {
+        width: 2.1em !important;
+        text-align: center;
+        padding-left: 0.2em;
+    }
+
+    #viewBtnTag {
+        width: 1.9em;
+        text-align: center;
+        padding-left: 3px !important;
+    }
+}
+
+@media screen and (max-width:867.9px) 
+{
+    #deleteBtn {
+        width: 3.0em !important;
+        padding-left: 0.1px !important;
+        font-size: 16px;
+    }
+
+    #editBtnTag {
+        width: 2.0em !important;
+        text-align: center;
+        padding-left: 0.2px;
+    }
+
+    #viewBtnTag {
+        width: 1.9em;
+        text-align: center;
+        padding-left: 3px !important;
+    }
+}
+
+@media screen and (max-width:862.9px) 
+{
+    #deleteBtn {
+        width: 2.7em !important;
+        padding-left: 0.1px !important;
+        font-size: 15px;
+    }
+
+    #editBtnTag {
+        width: 2.0em !important;
+        text-align: center;
+        padding-left: 0.2px;
+        font-size: 16px;
+    }
+
+    #viewBtnTag {
+        width: 1.9em;
+        text-align: center;
+        padding-left: 3px !important;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:360px) 
+{
+    .container-fluid{
+        border:2px solid red;
+    }
+}
