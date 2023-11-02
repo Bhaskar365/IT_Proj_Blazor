@@ -11,126 +11,101 @@
 
 <PageTitle>Home</PageTitle>
 
-<h3>IT Inventory Home</h3>
+<div class="container p-1 mt-2">
 
-@if (Show) 
-{
-    <div class="modal" tabindex="-1" style="display:block;background:rgba(205, 205, 205, 0.5);" role="dialog">
+    <h6>IT Inventory Management</h6>
+    <hr />
 
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="buttonTable">
+       <div class="excelImg" >
+           <button type="button" class="btn btn-primary" @onclick="GoToAddForm">Add New</button>
+           &nbsp;<img src="excel.png" alt="img" @onclick="Export" />
+            <input type="text" class="form-control" placeholder="Search user by owner only"
+                   @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+       </div>
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete</h4>
-                </div>
-
-                <div class="modal-body">
-                   Are you sure you want to delete the record
-                   <span>@DeviceId</span>?
-                </div>
-
-                <div class="modal-footer">
-                    
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="ClosePopUp">No</button>
-                    <button type="button" class="btn btn-danger" @onclick="() => Confirmation(true)">Yes</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-}
-
-<div class="container-fluid">
-    <div>
-        <img src="~/excel_icon.png" width="20px" height="20px" alt="img" />
-        <button type="button" class="btn btn-primary" @onclick="GoToAddForm">Add New Data</button>
-        &nbsp;<button type="button" class="btn btn-secondary" @onclick="Export">Export to Excel</button>
-    </div>
-</div>
-
-
-
-<div class="container-fluid">
-    <table class="table table-condensed table-bordered">
-        <thead>
-            <tr style="background-color:#003082;color:white;">
-                <th>ID</th>
-                <th>Product Name</th>
-                <th>Owner Name</th>
-                <th>Location</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (GetAll != null)
-            {
-                @foreach (var item in GetAll)
+        <table class="table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Device Type</th>
+                    <th>Device Owner</th>
+                    <th>Device Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (GetAll != null)
                 {
-                    <tr>
-                        <td>@item.DevId</td>
-                        <td>@item.DevType</td>
-                        <td>@item.Owner</td>
-                        <td>@item.Location</td>
-                        <td>
-                            <a id="viewBtnTag" class="btn btn-dark" href=@($"/view/{item.DevId}")>View</a>
-                            <a id="editBtnTag" class="btn btn-primary" href="@($"./editFormPage/{item.DevId}")">Edit</a>
-                            <button id="deleteBtn" type="button" class="btn btn-danger" @onclick="@(()=>showDelete(@item.DevId))">Delete</button>
-                            
-                        </td>
-                    </tr>
+                    @foreach (var item in GetAll)
+                    {
+                        <tr>
+                            <td>@item.DevId</td>
+                            <td>@item.DevType</td>
+                            <td>@item.Owner</td>
+                            <td>@item.Location</td>
+                            <td id="iconsID">
+                                <i class="fa fa-eye" aria-hidden="true"></i> | 
+                                <i class="fa fa-trash" aria-hidden="true"></i> |
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+       </table> 
+   </div>
 </div>
-
 
 @code
 {
-    public async Task Export() 
-    {
-            try
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("DevId", typeof(string));
-                dt.Columns.Add("DevType", typeof(string));
-                dt.Columns.Add("Owner", typeof(string));
-                dt.Columns.Add("Location", typeof(string));
-                var data = GetAll;
-                if (data != null && data.Count > 0)
-                {
-                    data.ForEach(item =>
-                    {
-                    dt.Rows.Add(item.DevId, item.DevType, item.Owner, item.Location);
-                    });
-                }
-                using (XLWorkbook wb = new XLWorkbook())
-                {
-                    wb.Worksheets.Add(dt, "Details");
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        wb.SaveAs(stream);
-                        var byteArray = stream.ToArray();
 
-                        // Download the Excel file
-                        await JSRuntime.InvokeAsync<object>("BlazorDownloadFile",
-                            "Customer.xlsx", Convert.ToBase64String(byteArray));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-    }
+    List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
+    protected List<Device_GetAll> searchUserData = new();
+
+    protected string SearchString { get; set; } = string.Empty;
 
     public string? DeviceId;
     public bool Show = false;
 
+    public async Task Export() 
+    {
+        try
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("DevId", typeof(string));
+            dt.Columns.Add("DevType", typeof(string));
+            dt.Columns.Add("Owner", typeof(string));
+            dt.Columns.Add("Location", typeof(string));
+            var data = GetAll;
+            if (data != null && data.Count > 0)
+            {
+                data.ForEach(item =>
+                {
+                    dt.Rows.Add(item.DevId, item.DevType, item.Owner, item.Location);
+                });
+            }
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt, "Details");
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    var byteArray = stream.ToArray();
+
+                    // Download the Excel file
+                    await JSRuntime.InvokeAsync<object>("BlazorDownloadFile",
+                        "Customer.xlsx", Convert.ToBase64String(byteArray));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
 
     public void ClosePopUp()
     {
@@ -166,9 +141,6 @@
 
     }
 
-
-    List<Device_GetAll> GetAll = new List<Device_GetAll>();
-
     protected override async Task OnInitializedAsync()
     {
         await GetAllData();
@@ -176,28 +148,46 @@
 
     public async Task GetAllData()
     {
-            var tokenKey = new[]
-           {
+        var tokenKey = new[]
+       {
                 new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
 
-        };
+    };
 
-            string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
-            var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
 
-            if (httpResponse.IsSuccessStatusCode)
-            {
-                InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
-                GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
-
-            }
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+            searchUserData = GetAll;
         }
+    }
 
-    
+    protected void FilterUser()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            GetAll = searchUserData.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+        else 
+        {
+            GetAll = searchUserData;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        GetAll = searchUserData;
+    }
 
     public void GoToAddForm()
     {
         navigation.NavigateTo("addProductForm");
     }
+
 
 }

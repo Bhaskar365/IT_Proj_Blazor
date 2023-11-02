@@ -1,5 +1,5 @@
 ﻿
-@media screen and (max-width:919px){
+/*@media screen and (max-width:919px){
 
     #viewBtnTag {
         min-width:3em;
@@ -9,9 +9,9 @@
         cursor:pointer;
 
     }
-    #editBtnTag{
+    #editBtnTag{*/
        /* min-width*/
-    }
+    /*}
 
     #deleteBtn {
         min-width: 3em;
@@ -170,4 +170,177 @@
     .container-fluid{
         border:2px solid red;
     }
+}*/
+
+.buttonTable {
+    width: 100%;
 }
+.table-bordered {
+    width: 100% !important;
+    margin-top: 1rem;
+}
+
+.buttonTable > .excelImg > img {
+    border: 1px solid gray;
+    width: 35px;
+    height: 33px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+    .buttonTable > .excelImg > img:hover {
+        background-color: #e8e8e5;
+        cursor: pointer;
+        transform: scale(1.2)
+    }
+
+    .buttonTable > .excelImg > button {
+        font-size: 13px;
+        width: 29%;
+    }
+
+.buttonTable > .excelImg > input {
+    width: 47%;
+    float: right;
+}
+
+table{
+    
+}
+
+    table > thead {
+        font-size: 12px;
+        overflow: scroll;
+        background-color: #135cbd;
+        color: white;
+    }
+
+    table > tbody {
+        font-size: 14px;
+        font-family: monospace;
+    }
+
+/* below 325px screen size */
+@media screen and (max-width:325px) 
+{
+    #iconsID {
+        font-size: 7px;
+    }
+
+    .buttonTable > .excelImg > button {
+        font-size: 12px;
+        padding: 3px 10px 3px 10px;
+    }
+
+    .buttonTable > .excelImg > input {
+        width: 38%;
+        float: right;
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    table > thead {
+        font-size: 9px;
+        background-color: #135cbd;
+        color: white;
+        overflow: hidden;
+        white-space: pre;
+    }
+    table > tbody {
+        font-size: 11px;
+        font-family: auto;
+    }
+
+    .buttonTable > .excelImg > img {
+        border: 1px solid gray;
+        width: 32px;
+        height: 31px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+}
+
+@media screen and (min-width:325px) and (max-width:350px) 
+{
+    .buttonTable > .excelImg > button {
+        font-size: 12px;
+        padding: 3px 10px 3px 10px;
+    }
+
+    .buttonTable > .excelImg > input {
+        width: 40%;
+        float: right;
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    .buttonTable > .excelImg > img {
+        border: 1px solid gray;
+        width: 32px;
+        height: 31px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+
+    table > thead {
+        font-size: 7px;
+        overflow: hidden;
+        background-color: #135cbd;
+        color: white;
+        white-space: nowrap;
+    }
+
+    table > tbody[b-srwow481l0] {
+        font-size: 9px;
+        font-family: monospace;
+    }
+}
+
+@media screen and (min-width:351px) and (max-width:380px) 
+{
+    .buttonTable > .excelImg > button {
+        font-size: 12px;
+        padding: 3px 10px 3px 10px;
+    }
+
+    .buttonTable > .excelImg > input {
+        width: 41%;
+        float: right;
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    .buttonTable > .excelImg > img {
+        border: 1px solid gray;
+        width: 32px;
+        height: 30px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+
+    table > tbody {
+        font-size: 12px;
+    }
+
+    #iconsID {
+        font-size: 7px;
+    }
+
+    table > thead {
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 8px;
+    }
+
+   
+    }
+ 
+@media screen and (min-width:381px) and (max-width:450px) {
+    .buttonTable > .excelImg > button {
+        border: 2px solid red;
+        /*font-size: 12px;
+            padding: 3px 10px 3px 10px;*/
+    }
+}
+
+
