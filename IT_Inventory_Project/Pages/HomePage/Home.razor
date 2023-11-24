@@ -27,17 +27,17 @@
         <table class="table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Device Type</th>
-                    <th>Device Owner</th>
-                    <th>Device Location</th>
-                    <th>Actions</th>
+                    <th><button @onclick='(e) => SortBy("DevId")'></button>ID</th>
+                <th><button @onclick='(e) => SortBy("DevType")'>2</button>Product Name</th>
+                <th><button @onclick='(e) => SortBy("Owner")'>3</button>Owner Name</th>
+                <th><button @onclick='(e) => SortBy("Location")'>4</button>Location</th>
+                <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if (GetAll != null)
+                @if (paginationTableData != null)
                 {
-                    @foreach (var item in GetAll)
+                    @foreach (var item in paginationTableData)
                     {
                         <tr>
                             <td>@item.DevId</td>
@@ -54,15 +54,27 @@
                 }
             </tbody>
        </table> 
+        <div class="pagination">
+            <button class="btn btn-link" disabled="@IsFirstPage" @onclick="PreviousPage">Previous</button>
+            <span>Page @currentPage of @totalPages</span>
+            <button class="btn btn-link" disabled="@IsLastPage" @onclick="NextPage">Next</button>
+        </div>
    </div>
 </div>
 
 @code
 {
+    private string term = "";
+    private string orderBy = "";
 
     List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
-    protected List<Device_GetAll> searchUserData = new();
+    private List<Device_GetAll> paginationTableData = new List<Device_GetAll>();
+    private int pageSize = 2; 
+    private int currentPage = 1;
+    private int totalPages => (int)Math.Ceiling((double)GetAll.Count / pageSize);
+    private bool IsFirstPage => currentPage == 1;
+    private bool IsLastPage => currentPage == totalPages;
 
     protected string SearchString { get; set; } = string.Empty;
 
@@ -161,7 +173,7 @@
         {
             InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
             GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
-            searchUserData = GetAll;
+            UpdatePagedData();
         }
     }
 
@@ -169,25 +181,78 @@
     {
         if (!string.IsNullOrEmpty(SearchString))
         {
-            GetAll = searchUserData.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            GetAll = GetAll.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
         }
         else 
         {
-            GetAll = searchUserData;
+            UpdatePagedData();
         }
     }
 
     public void ResetSearch()
     {
         SearchString = string.Empty;
-        GetAll = searchUserData;
+        UpdatePagedData();
     }
 
     public void GoToAddForm()
     {
         navigation.NavigateTo("addProductForm");
     }
+
+    private void UpdatePagedData()
+    {
+        int startIndex = (currentPage - 1) * pageSize;
+        paginationTableData = GetAll.Skip(startIndex).Take(pageSize).ToList();
+    }
+
+    private void NextPage()
+    {
+        if (!IsLastPage)
+        {
+            currentPage++;
+            UpdatePagedData();
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (!IsFirstPage)
+        {
+            currentPage--;
+            UpdatePagedData();
+        }
+    }
+    private void SortBy(string column)
+    {
+        if (orderBy == column)
+        {
+            GetAll.Reverse();
+        }
+        else
+        {
+            orderBy = column;
+            switch (column)
+            {
+                case "DevId":
+                    GetAll = GetAll.OrderBy(x => x.DevId).ToList();
+                    break;
+                case "DevType":
+                    GetAll = GetAll.OrderBy(x => x.DevType).ToList();
+                    break;
+                case "Owner":
+                    GetAll = GetAll.OrderBy(x => x.Owner).ToList();
+                    break;
+                case "Location":
+                    GetAll = GetAll.OrderBy(x => x.Location).ToList();
+                    break;
+            }
+        }
+
+        UpdatePagedData();
+    }
+}
 
 
 }
