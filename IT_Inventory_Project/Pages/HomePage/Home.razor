@@ -27,10 +27,61 @@
         <table class="table-bordered">
             <thead>
                 <tr>
-                    <th><button @onclick='(e) => SortBy("DevId")'></button>ID</th>
-                <th><button @onclick='(e) => SortBy("DevType")'>2</button>Product Name</th>
-                <th><button @onclick='(e) => SortBy("Owner")'>3</button>Owner Name</th>
-                <th><button @onclick='(e) => SortBy("Location")'>4</button>Location</th>
+                    <th>
+                        <button @onclick='(e) => SortBy("DevId")'>
+                            @{
+                                if (sortColumn == "DevId" && sortOrder == "asc")
+                                {
+                                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                }
+                    }
+                </button>ID
+            </th>
+                <th>
+                    <button @onclick='(e) => SortBy("DevType")'>
+                            @{
+                                if (sortColumn == "DevType" && sortOrder == "asc") 
+                                {
+                                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                }
+                            }
+                    </button>Product Name
+                </th>
+                <th>
+                    <button @onclick='(e) => SortBy("Owner")'>
+                            @{
+                                if(sortColumn == "Owner" && sortOrder == "asc") 
+                                {
+                                        <i class="fa fa-arrow-up" aria-label="true"></i>    
+                                }
+                                else
+                                {
+                                        <i class="fa fa-arrow-down" aria-label="true"></i>
+                                }
+                             }
+                    </button>Owner Name
+                </th>
+                <th>
+                    <button @onclick='(e) => SortBy("Location")'>
+                            @{
+                                if (sortColumn == "Location" && sortOrder == "asc") 
+                                {
+                                    <i class="fa fa-arrow-up" aria-label="true"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-arrow-up" aria-label="true"></i>
+                                }
+                            }        
+                    </button>Location</th>
                 <th>Actions</th>
                 </tr>
             </thead>
@@ -66,6 +117,9 @@
 {
     private string term = "";
     private string orderBy = "";
+
+    private string sortColumn = "DevId";
+    private string sortOrder = "asc";
 
     List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
@@ -226,6 +280,16 @@
     }
     private void SortBy(string column)
     {
+        if (sortColumn == column)
+        {
+            sortOrder = sortOrder == "asc" ? "desc" : "asc";
+        }
+        else 
+        {
+            sortColumn = column;
+            sortOrder = "asc";
+        }
+
         if (orderBy == column)
         {
             GetAll.Reverse();
@@ -252,7 +316,4 @@
 
         UpdatePagedData();
     }
-}
-
-
 }
