@@ -17,9 +17,11 @@
     <hr />
 
     <div class="buttonTable">
-       <div class="excelImg" >
-           <button type="button" class="btn btn-primary" @onclick="GoToAddForm">Add New</button>
-           &nbsp;<img src="excel.png" alt="img" @onclick="Export" />
+       <div class="iconContainer" >
+            <button type="button" id="addFormBtn" @onclick="GoToAddForm">
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </button>
+            &nbsp;<button id="excelBtn"><img src="excel.png" alt="img" @onclick="Export" id="excelIcon" /></button>
             <input type="text" class="form-control" placeholder="Search user by owner only"
                    @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
        </div>
@@ -105,6 +107,7 @@
                 }
             </tbody>
        </table> 
+       <!-----commment----->
         <div class="pagination">
             <button class="btn btn-link" disabled="@IsFirstPage" @onclick="PreviousPage">Previous</button>
             <span>Page @currentPage of @totalPages</span>

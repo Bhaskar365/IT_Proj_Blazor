@@ -1,346 +1,39 @@
-﻿
-/*@media screen and (max-width:919px){
-
-    #viewBtnTag {
-        min-width:3em;
-        padding:0.40em !important;
-        margin-left:0.1em;
-        margin-right:0.1em;
-        cursor:pointer;
-
-    }
-    #editBtnTag{*/
-       /* min-width*/
-    /*}
-
-    #deleteBtn {
-        min-width: 3em;
-        padding: 0.40em !important;
-        margin-left: 0.1em;
-        margin-right: 0.1em;
-        cursor: pointer;
-    }
+﻿.container {
+    width:100%;
 }
 
-@media screen and (max-width:902px) 
-{
-    #deleteBtn 
-    {
-        width:3.69em;
-        cursor:pointer;
-    }
-    #editBtnTag {
-        width: 3.2em;
-    }
-    #viewBtnTag {
-        min-width: 3em;
-        padding: 0.40em !important;
-        margin-left: 0.1em;
-        margin-right: 0.1em;
-        cursor: pointer;
-    }
-}
-
-@media screen and (max-width:900px) 
-{
-    #deleteBtn {
-        width: 3.3em;
-        padding-left: 0.2em !important; 
-    }
-
-    #editBtnTag {
-        width: 3em;
-        text-align:center;
-        padding-left:0.6em;
-    }
-
-    #viewBtnTag {
-        min-width: 2.5em;
-    }
-}
-
-@media screen and (max-width:890px) 
-{
-    #deleteBtn {
-        width: 3.2em;
-        padding-left: 0.1em !important;
-    }
-
-    #editBtnTag {
-        width: 2.7em;
-        text-align: center;
-        padding-left: 0.4em;
-    }
-
-    #viewBtnTag {
-        min-width: 2.6em;
-        text-align: center;
-        padding-left: 0.4em !important;
-    }
-}
-
-@media screen and (max-width:885px) 
-{
-    #deleteBtn {
-        width: 3.2em !important;
-        padding-left: 0.1em !important;
-        font-size:medium;
-    }
-
-    #editBtnTag {
-        width: 2.2em !important;
-        text-align: center;
-        padding-left: 0.2em;
-    }
-
-    #viewBtnTag {
-        width: 2em;
-        text-align: center;
-        padding-left: 3px !important;
-    }
-}
-
-@media screen and (max-width:870px) 
-{
-    #deleteBtn {
-        width: 3.1em !important;
-        padding-left: 0.1em !important;
-        font-size: medium;
-    }
-
-    #editBtnTag {
-        width: 2.1em !important;
-        text-align: center;
-        padding-left: 0.2em;
-    }
-
-    #viewBtnTag {
-        width: 1.9em;
-        text-align: center;
-        padding-left: 3px !important;
-    }
-}
-
-@media screen and (max-width:867.9px) 
-{
-    #deleteBtn {
-        width: 3.0em !important;
-        padding-left: 0.1px !important;
-        font-size: 16px;
-    }
-
-    #editBtnTag {
-        width: 2.0em !important;
-        text-align: center;
-        padding-left: 0.2px;
-    }
-
-    #viewBtnTag {
-        width: 1.9em;
-        text-align: center;
-        padding-left: 3px !important;
-    }
-}
-
-@media screen and (max-width:862.9px) 
-{
-    #deleteBtn {
-        width: 2.7em !important;
-        padding-left: 0.1px !important;
-        font-size: 15px;
-    }
-
-    #editBtnTag {
-        width: 2.0em !important;
-        text-align: center;
-        padding-left: 0.2px;
-        font-size: 16px;
-    }
-
-    #viewBtnTag {
-        width: 1.9em;
-        text-align: center;
-        padding-left: 3px !important;
-        font-size: 16px;
-    }
-}
-
-@media screen and (max-width:360px) 
-{
-    .container-fluid{
-        border:2px solid red;
-    }
-}*/
-
-.buttonTable {
-    width: 100%;
-}
-.table-bordered {
-    width: 100% !important;
-    margin-top: 1rem;
-}
-
-.buttonTable > .excelImg > img {
+#addFormBtn {
     border: 1px solid gray;
-    width: 35px;
-    height: 33px;
-    padding: 2px;
-    border-radius: 10px;
+    width: 29px;
+    height: 31px;
 }
 
-    .buttonTable > .excelImg > img:hover {
-        background-color: #e8e8e5;
-        cursor: pointer;
-        transform: scale(1.2)
-    }
-
-    .buttonTable > .excelImg > button {
-        font-size: 13px;
-        width: 29%;
-    }
-
-.buttonTable > .excelImg > input {
-    width: 47%;
-    float: right;
+#excelIcon {
+    border: 1px solid gray;
+    height: 26px;
+    width: 25px;
 }
 
-table{
-    
+.form-control{
+    border:2px solid blue;
 }
 
-    table > thead {
-        font-size: 12px;
-        overflow: scroll;
-        background-color: #135cbd;
-        color: white;
-    }
-
-    table > tbody {
-        font-size: 14px;
-        font-family: monospace;
-    }
-
-/* below 325px screen size */
-@media screen and (max-width:325px) 
-{
-    #iconsID {
-        font-size: 7px;
-    }
-
-    .buttonTable > .excelImg > button {
-        font-size: 12px;
-        padding: 3px 10px 3px 10px;
-    }
-
-    .buttonTable > .excelImg > input {
-        width: 38%;
-        float: right;
-        margin-top: 4px;
-        font-size: 12px;
-    }
-
-    table > thead {
-        font-size: 9px;
-        background-color: #135cbd;
-        color: white;
-        overflow: hidden;
-        white-space: pre;
-    }
-    table > tbody {
-        font-size: 11px;
-        font-family: auto;
-    }
-
-    .buttonTable > .excelImg > img {
-        border: 1px solid gray;
-        width: 32px;
-        height: 31px;
-        padding: 2px;
-        border-radius: 10px;
-    }
+#excelBtn{
+    border:1px solid gray;
 }
 
-@media screen and (min-width:325px) and (max-width:350px) 
-{
-    .buttonTable > .excelImg > button {
-        font-size: 12px;
-        padding: 3px 10px 3px 10px;
-    }
-
-    .buttonTable > .excelImg > input {
-        width: 40%;
-        float: right;
-        margin-top: 4px;
-        font-size: 12px;
-    }
-
-    .buttonTable > .excelImg > img {
-        border: 1px solid gray;
-        width: 32px;
-        height: 31px;
-        padding: 2px;
-        border-radius: 10px;
-    }
-
-    table > thead {
-        font-size: 7px;
-        overflow: hidden;
-        background-color: #135cbd;
-        color: white;
-        white-space: nowrap;
-    }
-
-    table > tbody[b-srwow481l0] {
-        font-size: 9px;
-        font-family: monospace;
-    }
+.table-bordered > thead {
+    font-size: 11px;
 }
 
-@media screen and (min-width:351px) and (max-width:380px) 
-{
-    .buttonTable > .excelImg > button {
-        font-size: 12px;
-        padding: 3px 10px 3px 10px;
+    .table-bordered > thead > tr > th {
+        border: 2px solid blue;
     }
 
-    .buttonTable > .excelImg > input {
-        width: 41%;
-        float: right;
-        margin-top: 4px;
-        font-size: 12px;
-    }
+        .table-bordered > thead > tr > th > button > i {
+            border:2px solid violet;
+        } 
 
-    .buttonTable > .excelImg > img {
-        border: 1px solid gray;
-        width: 32px;
-        height: 30px;
-        padding: 2px;
-        border-radius: 10px;
-    }
-
-    table > tbody {
-        font-size: 12px;
-    }
-
-    #iconsID {
-        font-size: 7px;
-    }
-
-    table > thead {
-        white-space: nowrap;
-        overflow: hidden;
-        font-size: 8px;
-    }
-
-   
-    }
- 
-@media screen and (min-width:381px) and (max-width:450px) {
-    .buttonTable > .excelImg > button {
-        border: 2px solid red;
-        /*font-size: 12px;
-            padding: 3px 10px 3px 10px;*/
-    }
+.table-bordered > tbody {
+    font-size: 12px;
 }
-
-
