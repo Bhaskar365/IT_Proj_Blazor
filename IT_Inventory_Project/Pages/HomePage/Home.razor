@@ -11,80 +11,78 @@
 
 <PageTitle>Home</PageTitle>
 
-<div class="container p-1 mt-2">
+<div class="container">
 
     <h6>IT Inventory Management</h6>
     <hr />
 
     <div class="buttonTable">
-       <div class="iconContainer" >
+        <div class="iconContainer">
             <button type="button" id="addFormBtn" @onclick="GoToAddForm">
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
             </button>
             &nbsp;<button id="excelBtn"><img src="excel.png" alt="img" @onclick="Export" id="excelIcon" /></button>
-            <input type="text" class="form-control" placeholder="Search user by owner only"
-                   @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
-       </div>
+        </div>
+        <input type="text" class="form-control" placeholder="Search user by owner only"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+    </div>
 
-        <table class="table-bordered">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>
-                        <button @onclick='(e) => SortBy("DevId")'>
-                            @{
-                                if (sortColumn == "DevId" && sortOrder == "asc")
-                                {
-                                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                }
-                                else
-                                {
-                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                }
-                    }
-                </button>ID
-            </th>
-                <th>
-                    <button @onclick='(e) => SortBy("DevType")'>
-                            @{
-                                if (sortColumn == "DevType" && sortOrder == "asc") 
-                                {
-                                        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                }
-                                else
-                                {
-                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                }
+                    <th @onclick='(e) => SortBy("DevId")'>
+                        @{
+                            if (sortColumn == "DevId" && sortOrder == "asc")
+                            {
+                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
                             }
-                    </button>Product Name
-                </th>
-                <th>
-                    <button @onclick='(e) => SortBy("Owner")'>
-                            @{
-                                if(sortColumn == "Owner" && sortOrder == "asc") 
-                                {
-                                        <i class="fa fa-arrow-up" aria-label="true"></i>    
-                                }
-                                else
-                                {
-                                        <i class="fa fa-arrow-down" aria-label="true"></i>
-                                }
-                             }
-                    </button>Owner Name
-                </th>
-                <th>
-                    <button @onclick='(e) => SortBy("Location")'>
-                            @{
-                                if (sortColumn == "Location" && sortOrder == "asc") 
-                                {
-                                    <i class="fa fa-arrow-up" aria-label="true"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-arrow-up" aria-label="true"></i>
-                                }
-                            }        
-                    </button>Location</th>
-                <th>Actions</th>
+                            else
+                            {
+                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            }
+                        }
+                        ID
+                    </th>
+                    <th @onclick='(e) => SortBy("DevType")'>
+                        @{
+                            if (sortColumn == "DevType" && sortOrder == "asc")
+                            {
+                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            }
+                        }
+                        Product Name
+                    </th>
+                    <th @onclick='(e) => SortBy("Owner")'>
+                        @{
+                            if (sortColumn == "Owner" && sortOrder == "asc")
+                            {
+                                <i class="fa fa-arrow-up" aria-label="true"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-arrow-down" aria-label="true"></i>
+                            }
+                        }
+                        Owner Name
+                    </th>
+                    <th @onclick='(e) => SortBy("Location")'>
+                        @{
+                            if (sortColumn == "Location" && sortOrder == "asc")
+                            {
+                                <i class="fa fa-arrow-up" aria-label="true"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-arrow-up" aria-label="true"></i>
+                            }
+                        }
+                        Location
+                    </th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,7 +96,7 @@
                             <td>@item.Owner</td>
                             <td>@item.Location</td>
                             <td id="iconsID">
-                                <i class="fa fa-eye" aria-hidden="true"></i> | 
+                                <i class="fa fa-eye" aria-hidden="true"></i> |
                                 <i class="fa fa-trash" aria-hidden="true"></i> |
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </td>
@@ -106,14 +104,12 @@
                     }
                 }
             </tbody>
-       </table> 
-       <!-----commment----->
-        <div class="pagination">
-            <button class="btn btn-link" disabled="@IsFirstPage" @onclick="PreviousPage">Previous</button>
-            <span>Page @currentPage of @totalPages</span>
-            <button class="btn btn-link" disabled="@IsLastPage" @onclick="NextPage">Next</button>
-        </div>
-   </div>
+        </table>
+
+        <!-----pagination----->
+        <Pagination CurrentPage="@currentPage" NextPage="NextPage" 
+            PreviousPage="PreviousPage" TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
+
 </div>
 
 @code
@@ -127,7 +123,7 @@
     List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
     private List<Device_GetAll> paginationTableData = new List<Device_GetAll>();
-    private int pageSize = 2; 
+    private int pageSize = 2;
     private int currentPage = 1;
     private int totalPages => (int)Math.Ceiling((double)GetAll.Count / pageSize);
     private bool IsFirstPage => currentPage == 1;
@@ -138,7 +134,7 @@
     public string? DeviceId;
     public bool Show = false;
 
-    public async Task Export() 
+    public async Task Export()
     {
         try
         {
@@ -181,13 +177,13 @@
         Show = false;
     }
 
-    public void showDelete(string DevId) 
+    public void showDelete(string DevId)
     {
         DeviceId = DevId;
         Show = true;
     }
 
-    public async Task Confirmation(bool value) 
+    public async Task Confirmation(bool value)
     {
         Show = false;
         var tokenKey = new[]
@@ -200,14 +196,13 @@
 
         var httpResponse = await Http.PostAsync(deleteUrl, new FormUrlEncodedContent(tokenKey));
 
-        if (httpResponse.IsSuccessStatusCode) 
+        if (httpResponse.IsSuccessStatusCode)
         {
             InventoryAPIResponse inventoryAPIResponseData = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
 
             await Task.Run(() => JSRuntime.InvokeVoidAsync("alert", $"'{inventoryAPIResponseData.Msg}','{inventoryAPIResponseData.Total}'"));
             navigation.NavigateTo("/", true);
         }
-
     }
 
     protected override async Task OnInitializedAsync()
@@ -218,10 +213,10 @@
     public async Task GetAllData()
     {
         var tokenKey = new[]
-       {
+        {
                 new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
 
-    };
+        };
 
         string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
         var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
@@ -241,7 +236,7 @@
             GetAll = GetAll.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
         }
-        else 
+        else
         {
             UpdatePagedData();
         }
@@ -287,7 +282,7 @@
         {
             sortOrder = sortOrder == "asc" ? "desc" : "asc";
         }
-        else 
+        else
         {
             sortColumn = column;
             sortOrder = "asc";
@@ -317,6 +312,13 @@
             }
         }
 
+        UpdatePagedData();
+    }
+
+    private void UpdatePageSize(ChangeEventArgs e)
+    {
+        pageSize = int.Parse(e.Value.ToString());
+        currentPage = 1; // Reset to first page
         UpdatePagedData();
     }
 }

@@ -1,5 +1,10 @@
 ﻿.container {
-    width:100%;
+    width: 100%;
+}
+
+.buttonTable {
+    display: flex;
+    justify-content: space-between;
 }
 
 #addFormBtn {
@@ -14,25 +19,32 @@
     width: 25px;
 }
 
-.form-control{
-    border:2px solid blue;
+.form-control {
+    float:left;
+    font-size: 10px;
+    width: 30%;
+    /*margin-right:5px;*/
 }
 
-#excelBtn{
-    border:1px solid gray;
+#excelBtn {
+    border: 1px solid gray;
+}
+
+.table-bordered{
+    border:2px solid red;
 }
 
 .table-bordered > thead {
-    font-size: 11px;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
     .table-bordered > thead > tr > th {
-        border: 2px solid blue;
     }
 
         .table-bordered > thead > tr > th > button > i {
-            border:2px solid violet;
-        } 
+            border: 2px solid violet;
+        }
 
 .table-bordered > tbody {
     font-size: 12px;
