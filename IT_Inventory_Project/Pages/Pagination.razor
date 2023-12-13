@@ -1,7 +1,8 @@
-﻿<div class="pagination">
+﻿
 
+<div class="pagination">
     <button class="btn btn-link" disabled="@IsFirstPage" @onclick="PreviousPage">Previous</button> 
-    <select @onchange="UpdatePageSize">
+    <select @onchange="UpdatePageSize" id="select"> 
         <option value="2">2</option>
         <option value="10">10</option>
         <option value="50">50</option>

@@ -1,0 +1,52 @@
+﻿
+.pagination {
+    margin-top: 1rem;
+    border: 1px solid rebeccapurple;
+    width: fit-content;
+    background-color: #e8e4e4;
+    padding: 1px;
+}
+
+    .pagination > button {
+        width: 58px;
+        height: 34px;
+        font-size: 9px;
+        background-color: black;
+        color: white;
+        text-decoration: none;
+        margin: 3px;
+        font-family: cursive;
+    }
+
+    .pagination > #select {
+        height: 33px;
+        margin-top: 3px;
+        margin-bottom: 4px;
+    }
+
+
+
+@media screen and (min-width:700px) {
+    .pagination {
+        margin-top: 1rem;
+        border: 1px solid rebeccapurple;
+        width: fit-content;
+        background-color: #e8e4e4;
+    }
+
+        .pagination > button {
+            margin: 9px;
+            background-color: black;
+            color: white;
+            border: none;
+            text-decoration: none;
+            font-family: cursive;
+        }
+
+        .pagination > #select {
+            height: 31px;
+            margin-top: 11px;
+            margin-bottom: 3px
+        }
+}
+

@@ -1,51 +1,76 @@
 ﻿.container {
-    width: 100%;
+    padding: 0px;
 }
+
+    .container > h6 {
+        font-size: 13px;
+        font-family: monospace;
+    }
 
 .buttonTable {
     display: flex;
     justify-content: space-between;
 }
 
+#iconsID{
+    display:flex;
+}
+
+    #iconsID > button {
+        margin: 1px;
+        border-radius: 6px;
+        border:1px solid gray;
+    }
+
+        #iconsID > button>i {
+            font-size:9px;
+        }
+
+        .max-width-table {
+            max-width: 100%;
+        }
+
+.table-responsive {
+    margin-top: 0.6em;
+}
+
 #addFormBtn {
     border: 1px solid gray;
-    width: 29px;
-    height: 31px;
+    border-radius: 4px;
 }
+    #addFormBtn > i {
+        font-size: 14px;
+    }
 
-#excelIcon {
-    border: 1px solid gray;
-    height: 26px;
-    width: 25px;
-}
+
 
 .form-control {
-    float:left;
+    float: left;
     font-size: 10px;
-    width: 30%;
-    /*margin-right:5px;*/
+    width: 49%;
 }
 
 #excelBtn {
     border: 1px solid gray;
+    border-radius: 4px;
 }
 
-.table-bordered{
-    border:2px solid red;
-}
-
-.table-bordered > thead {
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-    .table-bordered > thead > tr > th {
+    #excelBtn > #excelIcon {
+        width: 23px;
+    }
+    .table {
+        border: 1px solid #b0b0b7;
     }
 
-        .table-bordered > thead > tr > th > button > i {
-            border: 2px solid violet;
-        }
+    .table > thead {
+        font-size: 10px;
+        white-space: nowrap;
+    }
+            .table > thead > tr > th > button > i {
+                border: 2px solid violet;
+            }
 
-.table-bordered > tbody {
-    font-size: 12px;
-}
+    .table > tbody {
+        font-size: 9px;
+        text-align: center;
+    }

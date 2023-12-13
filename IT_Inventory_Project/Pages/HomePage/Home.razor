@@ -27,8 +27,9 @@
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
     </div>
 
-        <table class="table table-bordered">
-            <thead>
+    <div class="table-responsive">
+        <table class="table table-bordered max-width-table">
+            <thead class="table-primary">
                 <tr>
                     <th @onclick='(e) => SortBy("DevId")'>
                         @{
@@ -96,25 +97,31 @@
                             <td>@item.Owner</td>
                             <td>@item.Location</td>
                             <td id="iconsID">
-                                <i class="fa fa-eye" aria-hidden="true"></i> |
-                                <i class="fa fa-trash" aria-hidden="true"></i> |
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <button>
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button> 
+                                 <button>
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </button>
+                                <button>
+                                    <i class="fa fa-trash" aria-hidden="true"></i> 
+                                </button>
                             </td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+    </div>
+        
+<!-----pagination----->
+<Pagination CurrentPage="@currentPage" NextPage="NextPage" PreviousPage="PreviousPage" 
+    TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
 
-        <!-----pagination----->
-        <Pagination CurrentPage="@currentPage" NextPage="NextPage" 
-            PreviousPage="PreviousPage" TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
-
-</div>
+</div> 
 
 @code
 {
-    private string term = "";
     private string orderBy = "";
 
     private string sortColumn = "DevId";
