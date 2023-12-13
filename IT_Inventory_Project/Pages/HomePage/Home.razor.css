@@ -8,15 +8,21 @@
     }
 
 .buttonTable {
+    display: inline-flex;
+    justify-content: flex-end;
+    width:100%;
+}
+
+.iconContainer {
     display: flex;
-    justify-content: space-between;
+    width: 100%;
 }
 
-#iconsID{
-    display:flex;
+#iconsID {
+    display: flex;
 }
 
-    #iconsID > button {
+    #iconsID > button,a {
         margin: 1px;
         border-radius: 6px;
         border:1px solid gray;
@@ -29,6 +35,25 @@
         .max-width-table {
             max-width: 100%;
         }
+
+#iconsID > #viewBtn:hover {
+    transform: scale(1.2);
+    background-color: blue;
+    color: white;
+}
+
+#iconsID > #editBtn:hover {
+    transform: scale(1.2);
+    background-color:limegreen;
+    color: white;
+}
+
+#iconsID > #deleteBtn:hover {
+    transform: scale(1.2);
+    background-color: red;
+    color:white;
+}
+
 
 .table-responsive {
     margin-top: 0.6em;

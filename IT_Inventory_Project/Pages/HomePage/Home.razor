@@ -25,6 +25,8 @@
         </div>
         <input type="text" class="form-control" placeholder="Search user by owner only"
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+               <strong>X</strong>
+               
     </div>
 
     <div class="table-responsive">
@@ -55,7 +57,7 @@
                                 <i class="fa fa-arrow-down" aria-hidden="true"></i>
                             }
                         }
-                        Product Name
+                        Product
                     </th>
                     <th @onclick='(e) => SortBy("Owner")'>
                         @{
@@ -68,7 +70,7 @@
                                 <i class="fa fa-arrow-down" aria-label="true"></i>
                             }
                         }
-                        Owner Name
+                        Owner
                     </th>
                     <th @onclick='(e) => SortBy("Location")'>
                         @{
@@ -97,14 +99,14 @@
                             <td>@item.Owner</td>
                             <td>@item.Location</td>
                             <td id="iconsID">
-                                <button>
+                                <button id="viewBtn" @onclick="EventCallback.Factory.Create(this, () => GoToViewPage(item.DevId))">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
-                                </button> 
-                                 <button>
+                                </button>
+                                <button id="editBtn" @onclick="EventCallback.Factory.Create(this, ()=>GoToEditPage(item.DevId))">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </button>
-                                <button>
-                                    <i class="fa fa-trash" aria-hidden="true"></i> 
+                                <button id="deleteBtn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="fa fa-trash" aria-hidden="true" @onclick="@(()=>ShowDelete(item.DevId))"></i>
                                 </button>
                             </td>
                         </tr>
@@ -119,6 +121,26 @@
     TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
 
 </div> 
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete product with ID : @DeviceId permanently?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClosePopUp">Close</button>
+                <button type="button" class="btn btn-danger" @onclick="(()=>DeleteConfirmation(true))">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code
 {
@@ -184,14 +206,15 @@
         Show = false;
     }
 
-    public void showDelete(string DevId)
+    public void ShowDelete(string DevId)
     {
         DeviceId = DevId;
         Show = true;
     }
 
-    public async Task Confirmation(bool value)
+    public async Task DeleteConfirmation(bool value)
     {
+
         Show = false;
         var tokenKey = new[]
         {
@@ -247,6 +270,17 @@
         {
             UpdatePagedData();
         }
+    }
+
+    public async Task GoToViewPage(string DeviceId)
+    {
+        string viewPageUrl = $"/view/{DeviceId}";
+        navigation.NavigateTo(viewPageUrl);
+    }
+
+    public async Task GoToEditPage(string DevId)
+    {
+        navigation.NavigateTo($"/editFormPage/{DevId}");
     }
 
     public void ResetSearch()

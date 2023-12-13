@@ -263,9 +263,7 @@
         {
             InventoryAPIResponse res = JsonConvert.DeserializeObject<InventoryAPIResponse>(await DeviceGetResponse.Content.ReadAsStringAsync());
             GetDataFromID = JsonConvert.DeserializeObject<Device_Upd>(res.Data);
-
         }
-
     }
 
     public async Task UpdateFunction()
