@@ -25,8 +25,7 @@
         </div>
         <input type="text" class="form-control" placeholder="Search user by owner only"
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
-               <strong>X</strong>
-               
+
     </div>
 
     <div class="table-responsive">
@@ -115,15 +114,13 @@
             </tbody>
         </table>
     </div>
-        
-<!-----pagination----->
-<Pagination CurrentPage="@currentPage" NextPage="NextPage" PreviousPage="PreviousPage" 
-    TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
 
-</div> 
+    <!-----pagination----->
+    <Pagination CurrentPage="@currentPage" NextPage="NextPage" PreviousPage="PreviousPage"
+                TotalPages="@totalPages" UpdatePageSize="UpdatePageSize"></Pagination>
+</div>
 
 <!-- Modal -->
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -259,16 +256,17 @@
         }
     }
 
-    protected void FilterUser()
+    protected async Task FilterUser()
     {
         if (!string.IsNullOrEmpty(SearchString))
         {
             GetAll = GetAll.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            UpdatePagedData();
         }
         else
         {
-            UpdatePagedData();
+            await GetAllData();
         }
     }
 
@@ -294,6 +292,8 @@
         navigation.NavigateTo("addProductForm");
     }
 
+    private List<Device_GetAll> sortedTableData = new List<Device_GetAll>();
+
     private void UpdatePagedData()
     {
         int startIndex = (currentPage - 1) * pageSize;
@@ -317,6 +317,7 @@
             UpdatePagedData();
         }
     }
+
     private void SortBy(string column)
     {
         if (sortColumn == column)
@@ -339,8 +340,20 @@
             switch (column)
             {
                 case "DevId":
-                    GetAll = GetAll.OrderBy(x => x.DevId).ToList();
+                    GetAll = sortOrder == "asc" ?
+                        GetAll.OrderBy(x => int.Parse(x.DevId))
+                            .ThenBy(x => x.DevType)
+                            .ThenBy(x => x.Owner)
+                            .ThenBy(x => x.Location)
+                            .ToList() :
+                        GetAll.OrderByDescending(x => int.Parse(x.DevId))
+                            .ThenByDescending(x => x.DevType)
+                            .ThenByDescending(x => x.Owner)
+                            .ThenByDescending(x => x.Location)
+                            .ToList();
                     break;
+                    
+
                 case "DevType":
                     GetAll = GetAll.OrderBy(x => x.DevType).ToList();
                     break;
@@ -359,7 +372,8 @@
     private void UpdatePageSize(ChangeEventArgs e)
     {
         pageSize = int.Parse(e.Value.ToString());
-        currentPage = 1; // Reset to first page
+        // Reset to first page
+        currentPage = 1;
         UpdatePagedData();
     }
 }
