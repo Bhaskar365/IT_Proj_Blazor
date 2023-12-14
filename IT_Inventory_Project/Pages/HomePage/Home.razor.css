@@ -13,6 +13,12 @@
     width:100%;
 }
 
+.table-primary > tr > th {
+    background-color: #240799;
+    color: white;
+    text-align: center;
+}
+
 .iconContainer {
     display: flex;
     width: 100%;
@@ -67,7 +73,16 @@
         font-size: 14px;
     }
 
+    #addFormBtn:hover {
+        background: #ebebeb;
+        box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
+        transform: scale(1.04);
+    }
 
+#excelBtn:hover {
+    box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
+    transform: scale(1.04);
+}
 
 .form-control {
     float: left;
@@ -99,3 +114,86 @@
         font-size: 9px;
         text-align: center;
     }
+
+@media screen and (min-width:400px) {
+
+    .container > h6 {
+        font-size: 14px;
+        font-family: cursive;
+    }
+
+    #iconsID {
+        display: block;
+    }
+
+        #iconsID > button {
+            width: 24px;
+        }
+}
+
+@media screen and (min-width:550px) {
+    
+    .table > thead {
+        font-size: 11px;
+        font-family: 'FontAwesome';
+    }
+}
+
+@media screen and (min-width:620px) {
+    
+    #tableBody {
+        font-size: 10px;
+    }
+
+    .form-control {
+        float: left;
+        font-size: 11px;
+        width: 49%;
+    }
+}
+
+@media screen and (min-width:641px) 
+{
+    .form-control {
+        font-size: 10px;
+        width: 52%;
+    }
+
+    #addFormBtn {
+        border-radius: 7px;
+    }
+
+    #excelBtn {
+        border-radius: 7px;
+    }
+
+    .table > thead {
+        font-size: 9px;
+        font-family: 'FontAwesome';
+    }
+
+    tableBody {
+        font-size: 9px;
+    }
+
+    #iconsID > button {
+        width: 22px;
+    }
+
+    .container > h6 {
+        font-size: 12px;
+        font-family: cursive;
+    }
+}
+
+@media screen and (min-width:700px) {
+
+    .table > thead {
+        font-size: 10px;
+        font-family: 'FontAwesome';
+    }
+
+
+
+}
+

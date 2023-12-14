@@ -1,10 +1,11 @@
 ﻿
 .pagination {
-    margin-top: 1rem;
-    border: 1px solid rebeccapurple;
+    margin-top: 0.5rem;
+    border: 1px solid #7c7777;
+    border-radius: 6px;
     width: fit-content;
     background-color: #e8e4e4;
-    padding: 1px;
+    padding: 2px;
 }
 
     .pagination > button {
@@ -25,28 +26,78 @@
     }
 
 
+@media screen and (min-width:620px) {
 
-@media screen and (min-width:700px) {
+    .pagination > button {
+        width: 58px;
+        height: 34px;
+        font-size: 9px;
+        background-color: black;
+        color: white;
+        text-decoration: none;
+        margin: 3px;
+        font-family: cursive;
+    }
+
     .pagination {
-        margin-top: 1rem;
-        border: 1px solid rebeccapurple;
+        margin-top: 0.5rem;
+        border: 1px solid #7c7777;
         width: fit-content;
+        border-radius: 6px;
         background-color: #e8e4e4;
+        padding: 3px;
+    }
+}
+
+@media screen and (min-width:641px) {
+    .pagination {
+        margin-top: 0.5rem;
+        border: 1px solid #7c7777;
+        width: fit-content;
+        border-radius: 6px;
+        background-color: #e8e4e4;
+        padding: 0px;
     }
 
         .pagination > button {
-            margin: 9px;
+            width: 55px;
+            height: 29px;
+            font-size: 8px;
             background-color: black;
             color: white;
-            border: none;
             text-decoration: none;
+            margin: 5px;
+            font-family: cursive;
+        }
+}
+
+@media screen and (min-width:700px) {
+    
+    .pagination {
+        margin-top: 0.5rem;
+        border: 1px solid #7c7777;
+        width: fit-content;
+        border-radius: 6px;
+        background-color: #e8e4e4;
+        padding: 1px;
+    }
+
+        .pagination > button {
+            width: 57px;
+            height: 31px;
+            font-size: 8px;
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            margin: 5px;
             font-family: cursive;
         }
 
         .pagination > #select {
-            height: 31px;
-            margin-top: 11px;
-            margin-bottom: 3px
+            height: 33px;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
 }
+
 

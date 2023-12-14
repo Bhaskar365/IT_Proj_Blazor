@@ -8,7 +8,7 @@ namespace IT_Inventory_Project.Data
 
         [JsonProperty("token")]
         [Required]
-        public string Token { get; set; } = string.Empty;
+        public string token { get; set; } = string.Empty;
 
         [JsonProperty("DevId")]
         public string DevId { get; set; }

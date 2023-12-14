@@ -16,9 +16,9 @@
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Token</label>
         <input class="form-control" placeholder="Token"
-               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.Token">
+               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.token">
         </input>
-        <ValidationMessage For="()=>GetDataFromID.Token"></ValidationMessage>
+        <ValidationMessage For="()=>GetDataFromID.token"></ValidationMessage>
     </div>
 
       <div class="mb-3">
@@ -31,13 +31,13 @@
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Device Type</label>
         <div>
-            <InputText class="form-control" placeholder="Device Type"
+            <InputSelect class="form-control" placeholder="Device Type"
                        aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevType">
                 @foreach (var option in DeviceOptions)
                 {
                     <option value="@option.OptionValue">@option.OptionName</option>
                 }
-            </InputText>
+            </InputSelect>
             <ValidationMessage For="()=>GetDataFromID.DevType"></ValidationMessage>
         </div>
     </div>
@@ -270,7 +270,7 @@
     {
         var tokenKey = new[]
       {
-            new KeyValuePair<string, string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521"),
+            new KeyValuePair<string, string>("token",GetDataFromID.token),
             new KeyValuePair<string, string>("DevId",GetDataFromID.DevId),
             new KeyValuePair<string, string>("DevType",GetDataFromID.DevType),
             new KeyValuePair<string, string>("DevTypeOther",GetDataFromID.DevTypeOther),
