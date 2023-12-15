@@ -100,4 +100,25 @@
         }
 }
 
+@media screen and (min-width:1100px) {
+    .pagination {
+        padding: 4px
+    }
 
+        .pagination > button {
+            width: 68px;
+            height: 34px;
+            font-size: 12px;
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            margin: 10px;
+            font-family: cursive;
+        }
+
+        .pagination > #select {
+            height: 35px;
+            margin-top: 9px;
+            margin-bottom: 0px;
+        }
+}

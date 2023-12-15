@@ -42,22 +42,38 @@
             max-width: 100%;
         }
 
-#iconsID > #viewBtn:hover {
-    transform: scale(1.2);
-    background-color: blue;
+#iconsID > #viewBtn {
+    background-color:lawngreen;
+}
+
+#iconsID > #editBtn {
+    background-color:yellow;
+}
+
+#iconsID > #deleteBtn {
+    background-color: orangered;
     color: white;
+}
+
+#iconsID > #viewBtn:hover {
+    transform: scale(1.1);
+    background-color: #29b8e7;
+    color: white;
+    box-shadow: 1.5px 1px 0px 0.3px #908585;
 }
 
 #iconsID > #editBtn:hover {
-    transform: scale(1.2);
-    background-color:limegreen;
+    transform: scale(1.1);
+    background-color: #29b8e7;
     color: white;
+    box-shadow: 1.5px 1px 0px 0.3px #908585;
 }
 
 #iconsID > #deleteBtn:hover {
-    transform: scale(1.2);
-    background-color: red;
-    color:white;
+    transform: scale(1.1);
+    background-color: #29b8e7;
+    color: white;
+    box-shadow: 1.5px 1px 0px 0.3px #908585;
 }
 
 
@@ -68,21 +84,29 @@
 #addFormBtn {
     border: 1px solid gray;
     border-radius: 4px;
+    background-image: linear-gradient(44deg, #00ff9d, #565bd2);
 }
     #addFormBtn > i {
         font-size: 14px;
     }
 
     #addFormBtn:hover {
-        background: #ebebeb;
+        background-image: linear-gradient(44deg, #ff0000, #ffeb00);
         box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
         transform: scale(1.04);
     }
 
-#excelBtn:hover {
-    box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
-    transform: scale(1.04);
+#excelBtn {
+    border: 1px solid gray;
+    border-radius: 4px;
+    background-image: linear-gradient(319deg, #a7a755, #8bff17);
 }
+
+    #excelBtn:hover {
+        box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
+        transform: scale(1.04);
+        background-image: linear-gradient(90deg, #ff0000, #f6f6f6);
+    }
 
 .form-control {
     float: left;
@@ -90,17 +114,13 @@
     width: 49%;
 }
 
-#excelBtn {
-    border: 1px solid gray;
-    border-radius: 4px;
-}
 
     #excelBtn > #excelIcon {
         width: 23px;
     }
-    .table {
-        border: 1px solid #b0b0b7;
-    }
+.table {
+    border: 1px solid #d5d5fb;
+}
 
     .table > thead {
         font-size: 10px;
@@ -113,6 +133,7 @@
     .table > tbody {
         font-size: 9px;
         text-align: center;
+        font-family: cursive;
     }
 
 @media screen and (min-width:400px) {
@@ -192,8 +213,134 @@
         font-size: 10px;
         font-family: 'FontAwesome';
     }
-
-
-
 }
 
+@media screen and (min-width:830px) 
+{
+    #addFormBtn {
+        border-radius: 6px;
+        padding: 5px;
+    }
+
+        #addFormBtn > i {
+            font-size: 15px;
+        }
+
+    #excelBtn {
+        border-radius: 8px;
+    }
+
+        #excelBtn > #excelIcon{
+            width: 24px;
+        }
+
+    .form-control {
+        font-size: 11px;
+        width: 46%;
+    }
+
+    .table > thead {
+        font-size: 11px;
+        font-family: cursive;
+    }
+
+    #iconsID > button {
+        width: 23%;
+    }
+
+        #iconsID > button > i {
+            font-size: 12px;
+            margin-top: 3px;
+        } 
+}
+
+@media screen and (min-width:900px) {
+    .container > h6 {
+        font-size: 14px;
+    }
+
+    #addFormBtn {
+        border-radius: 6px;
+        padding: 5px;
+        width: 10%;
+    }
+
+    #excelBtn {
+        border-radius: 8px;
+        width: 10%;
+    }
+
+    .form-control {
+        font-size: 12px;
+        width: 50%;
+    }
+
+    #tableBody {
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width:1100px) {
+
+    .table-primary > tr > th > i {
+        cursor:pointer;
+    }
+
+        .table-primary > tr > th > i:hover {
+            transform: scale(1.5);
+            color:orangered;  
+        }
+
+        .container > h6 {
+            font-size: 18px;
+        }
+    #addFormBtn {
+        border-radius: 6px;
+        padding: 6px 0px 2px 5px;
+        width: 10%;
+        height: 40px;
+    }
+
+        #addFormBtn > i {
+            font-size: 20px;
+        }
+
+    #excelBtn {
+        border-radius: 8px;
+        width: 10%;
+        height: 40px;
+    }
+
+        #excelBtn > #excelIcon {
+            width: 30px;
+        }
+
+    .form-control {
+        font-size: 14px;
+        width: 55%;
+    }
+
+    .table > thead {
+        font-size: 13px;
+        font-family: cursive;
+    }
+
+    #tableBody {
+        font-size: 13px;
+    }
+
+    #iconsID {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #iconsID > button {
+        width: 28%;
+        height: 29px;
+    }
+
+        #iconsID > button > i {
+            font-size: 16px;
+            margin-top: 3px;
+        }     
+}
