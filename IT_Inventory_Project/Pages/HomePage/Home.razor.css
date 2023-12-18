@@ -91,7 +91,7 @@
     }
 
     #addFormBtn:hover {
-        background-image: linear-gradient(44deg, #ff0000, #ffeb00);
+        background: #8ce28c;
         box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.4);
         transform: scale(1.04);
     }
