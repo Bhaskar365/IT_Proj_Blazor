@@ -1,1 +1,210 @@
-﻿
+﻿.container > h3 
+{
+    font-size:14px; 
+}
+
+.mb-3>.form-label{
+    font-size:12px;
+}
+
+.mb-3 > .form-control {
+    font-size: 10px;
+}
+
+#footer-buttons {
+    margin-bottom: 1rem
+}
+
+#footer-buttons > #editDetailsBtn {
+    font-size: 10px;
+    text-decoration: none;
+}
+
+    #footer-buttons > #goBackBtn {
+        font-size: 10px;
+        text-decoration: none;
+    }
+
+
+@media screen and (min-width:500px) 
+{
+    .container > h3 {
+        font-size: 16px;
+    }
+
+    .mb-3 > .form-label {
+        font-size: 14px;
+    }
+
+    .mb-3 > .form-control {
+        font-size: 12px;
+    }
+
+    #footer-buttons > #editDetailsBtn {
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    #footer-buttons > #goBackBtn {
+        font-size: 12px;
+        text-decoration: none;
+    }
+}
+
+@media screen and (min-width:600px) {
+
+    .container{
+        max-width:none;
+    }
+
+        .container > h3 {
+            font-size: 17px;
+        }
+
+    .mb-3 > .form-label {
+        font-size: 15px;
+    }
+
+    .mb-3 > .form-control {
+        font-size: 13px;
+    }
+
+    #footer-buttons > #editDetailsBtn {
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    #footer-buttons > #goBackBtn {
+        font-size: 13px;
+        text-decoration: none;
+    }
+}
+
+@media screen and (min-width:641px) {
+    
+    .container {
+        padding: 0px;
+    }
+
+    #footer-buttons > #editDetailsBtn {
+        font-size: 14px;
+    }
+
+    #footer-buttons > #goBackBtn {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width:700px) {
+    
+    .container > h3 
+    {
+        margin-top: 2px;
+        font-size: 18px;
+    }
+
+    .mb-3 > .form-control {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width:780px) {
+
+    .container {
+        padding: 3px
+    }
+
+        .container > h3 {
+            font-size: 18px;
+        }
+
+    .mb-3 > .form-label {
+        font-size: 16px;
+    }
+
+    .mb-3 > .form-control {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width:830px) {
+
+    .container 
+    {
+        padding: 0px;
+    }
+
+        .container > h3 
+        {
+            font-size: 19px;
+        }
+
+    .mb-3 > .form-label {
+        font-size: 17px;
+    }
+
+    #footer-buttons > #editDetailsBtn {
+        font-size: 15px;
+    }
+
+    #footer-buttons > #goBackBtn {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width:950px) 
+{
+    #footer-buttons > #editDetailsBtn {
+        font-size: 16px;
+    }
+
+    #footer-buttons > #goBackBtn {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width:1200px) 
+{
+    form
+    {
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .mb-3 {
+        flex: 0 0 48%;
+        margin: 2px 5px 0px 4px;
+    }
+    #footer-buttons {
+        width: 100%;
+        padding: 4px;
+    }
+}
+
+
+@media screen and (min-width:1509px) 
+{
+    form {
+        display:flex;
+        flex-wrap:wrap; 
+    }
+
+    .mb-3 {
+        flex: 0 0 49%;
+        margin: 6px;
+    }
+
+    #footer-buttons {
+        width: 100%;
+        padding: 4px;
+    }
+
+        #footer-buttons > #editDetailsBtn {
+            font-size: 17px;
+        }
+
+        #footer-buttons > #goBackBtn {
+            font-size: 18px;
+        }
+
+}

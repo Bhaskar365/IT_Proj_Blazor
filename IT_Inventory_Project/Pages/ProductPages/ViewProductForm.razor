@@ -4,102 +4,106 @@
 @inject HttpClient http
 @inject NavigationManager navigationManager
 
-<h3>Product Details</h3>
+<div class="container">
+    
+    <h3>Product Details</h3>
+    <hr />
 
-<hr/>
+    <form>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">DEV ID</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" @bind-value="@GetAll.DevId" disabled />
+        </div>
 
-<form>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">DEV ID</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" @bind-value="@GetAll.DevId" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE TYPE</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.DevType" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE TYPE</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.DevType" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE TYPE OTHER</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.DevTypeOther" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE TYPE OTHER</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.DevTypeOther" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE MAKE</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Make" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE MAKE</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Make" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE MODEL</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Model" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE MODEL</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Model" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE OWNER</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Owner" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE OWNER</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Owner" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE LOCATION</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Location" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE LOCATION</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Location" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE SERIAL</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Serial" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE SERIAL</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Serial" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE PURCHASE DATE</label>
+            <input type="datetime" class="form-control" @bind-value="@GetAll.PurchaseDate" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE PURCHASE DATE</label>
-        <input type="datetime" class="form-control" @bind-value="@GetAll.PurchaseDate" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE WARRANTY EXPIRY DATE</label>
+            <input type="datetime" class="form-control" @bind-value="@GetAll.WarrantyExpDate" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE WARRANTY EXPIRY DATE</label>
-        <input type="datetime" class="form-control" @bind-value="@GetAll.WarrantyExpDate" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE SERVICE EXPIRY DATE</label>
+            <input type="datetime" class="form-control" @bind-value="@GetAll.ServiceExpDate" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE SERVICE EXPIRY DATE</label>
-        <input type="datetime" class="form-control" @bind-value="@GetAll.ServiceExpDate" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE VALUE</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Value" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE VALUE</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Value" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE SIZE</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Size" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE SIZE</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Size" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE TONER</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.Toner" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE TONER</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.Toner" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE MAC ADDRESS</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.MacAddress" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE MAC ADDRESS</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.MacAddress" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE IP ADDRESS</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.IPAddress" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE IP ADDRESS</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.IPAddress" disabled />
-    </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">DEVICE CELLPHONE NUMBER</label>
+            <input type="text" class="form-control" @bind-value="@GetAll.CellNumber" disabled />
+        </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">DEVICE CELLPHONE NUMBER</label>
-        <input type="text" class="form-control" @bind-value="@GetAll.CellNumber" disabled />
-    </div>
+        <div id="footer-buttons">
+            <a id="editDetailsBtn" class="btn btn-primary" href="@($"/product/{DevId}")">Edit Details</a>
+            <a id="goBackBtn" class="btn btn-secondary" href="/">Go Back</a>
+        </div>
 
-    <div id="footer-buttons">
-        <a id="editDetailsBtn" href="@($"/product/{DevId}")">Edit Details</a>
-        <a id="goBackBtn" href="/">Go Back</a>
-    </div>
+    </form>
+</div>
 
-</form>
+
 
 @code {
 
