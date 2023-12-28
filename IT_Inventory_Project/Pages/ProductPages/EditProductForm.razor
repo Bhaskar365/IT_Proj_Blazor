@@ -6,206 +6,211 @@
 @inject NavigationManager navigate;
 @inject IJSRuntime JSRuntime;
 
-<div class="row my-2">
-    <h3 class="card-title text-primary mb-3 ml-3">Edit Page</h3>
-</div>
+<div class="container">
 
-<EditForm Model="@GetDataFromID" OnValidSubmit="UpdateFunction">
-      <DataAnnotationsValidator></DataAnnotationsValidator>     
+    <h3 class="card-title text-primary">Edit Page</h3>
 
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Token</label>
-        <input class="form-control" placeholder="Token"
-               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.token">
-        </input>
-        <ValidationMessage For="()=>GetDataFromID.token"></ValidationMessage>
-    </div>
+    <hr />
 
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device ID</label>
-        <input disabled class="form-control" placeholder="Dev ID"
-               aria-describedby="basic-addon1" @bind-value="@GetDataFromID.DevId">
-        </input>
-    </div>
+    <EditForm Model="@GetDataFromID" OnValidSubmit="UpdateFunction">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Type</label>
-        <div>
-            <InputSelect class="form-control" placeholder="Device Type"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevType">
-                @foreach (var option in DeviceOptions)
-                {
-                    <option value="@option.OptionValue">@option.OptionName</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="()=>GetDataFromID.DevType"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Token</label>
+            <input class="form-control" placeholder="Token"
+                   aria-describedby="basic-addon1" @bind-value="@GetDataFromID.token">
+            </input>
+            <ValidationMessage For="()=>GetDataFromID.token"></ValidationMessage>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Type Other</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Type Other"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevTypeOther"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.DevTypeOther"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device ID</label>
+            <input disabled class="form-control" placeholder="Dev ID"
+                   aria-describedby="basic-addon1" @bind-value="@GetDataFromID.DevId">
+            </input>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Make</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Make"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Make"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Make"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Type</label>
+            <div>
+                <InputSelect class="form-control" placeholder="Device Type"
+                             aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.DevType">
+                    @foreach (var option in DeviceOptions)
+                    {
+                        <option value="@option.OptionValue">@option.OptionName</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="()=>GetDataFromID.DevType"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Model</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Model"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Model"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Model"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Type Other</label>
+            <div>
+                <input class="form-control" placeholder="Device Type Other"
+                           aria-describedby="basic-addon1" @bind-value="@GetDataFromID.DevTypeOther">
+                </input>
+                <ValidationMessage For="()=>GetDataFromID.DevTypeOther"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Owner</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Owner"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Owner"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Owner"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Make</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Make"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Make"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Make"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Location</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Location"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Location"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Location"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Model</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Model"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Model"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Model"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Serial</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Serial"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Serial"></InputText>
-           <ValidationMessage For="()=>GetDataFromID.Serial"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Owner</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Owner"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Owner"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Owner"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Purchase Date</label>
-        <div>
-            <InputDate class="form-control" placeholder="Device Purchase Date"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.PurchaseDate"></InputDate>
-            <ValidationMessage For="()=>GetDataFromID.PurchaseDate"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Location</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Location"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Location"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Location"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Warranty Expiry Date</label>
-        <div>
-            <InputDate class="form-control" placeholder="Device Warranty Exp. Date"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.WarrantyExpDate"></InputDate>
-            <ValidationMessage For="()=>GetDataFromID.WarrantyExpDate"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Serial</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Serial"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Serial"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Serial"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Device Service Expiry Date</label>
-        <div>
-            <InputDate class="form-control" placeholder="Device Service Exp. Date"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.ServiceExpDate"></InputDate>
-            <ValidationMessage For="()=>GetDataFromID.ServiceExpDate"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Purchase Date</label>
+            <div>
+                <InputDate class="form-control" placeholder="Device Purchase Date"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.PurchaseDate"></InputDate>
+                <ValidationMessage For="()=>GetDataFromID.PurchaseDate"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Device Value</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Value"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Value"></InputText>
-         <ValidationMessage For="()=>GetDataFromID.Value"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Warranty Expiry Date</label>
+            <div>
+                <InputDate class="form-control" placeholder="Device Warranty Exp. Date"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.WarrantyExpDate"></InputDate>
+                <ValidationMessage For="()=>GetDataFromID.WarrantyExpDate"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Device Size</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Size"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Size"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Size"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Service Expiry Date</label>
+            <div>
+                <InputDate class="form-control" placeholder="Device Service Exp. Date"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.ServiceExpDate"></InputDate>
+                <ValidationMessage For="()=>GetDataFromID.ServiceExpDate"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device Toner</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Toner"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Toner"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.Toner"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Value</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Value"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Value"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Value"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Device MacAddress</label>
-        <div>
-            <InputText class="form-control" placeholder="Device MAC Address"
-                       aria-describedby="basic-addon1"  @bind-Value="@GetDataFromID.MacAddress"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.MacAddress"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Size</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Size"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Size"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Size"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device IPAddress</label>
-        <div>
-            <InputText class="form-control" placeholder="Device IP Address"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.IPAddress"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.IPAddress"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device Toner</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Toner"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.Toner"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.Toner"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Device CellNumber</label>
-        <div>
-            <InputText class="form-control" placeholder="Device Cell Number"
-                       aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.CellNumber"></InputText>
-            <ValidationMessage For="()=>GetDataFromID.CellNumber"></ValidationMessage>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device MacAddress</label>
+            <div>
+                <InputText class="form-control" placeholder="Device MAC Address"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.MacAddress"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.MacAddress"></ValidationMessage>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group py-2">
-        <button type="submit" class="btn btn-warning">Update Data</button>
-        <button type="button" class="btn btn-danger" @onclick="@(()=>showDelete(GetDataFromID.DevId))">Delete Data</button>
-        <NavLink href="/" class="btn btn-secondary">Go Back</NavLink>
-    </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device IPAddress</label>
+            <div>
+                <InputText class="form-control" placeholder="Device IP Address"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.IPAddress"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.IPAddress"></ValidationMessage>
+            </div>
+        </div>
 
-</EditForm>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device CellNumber</label>
+            <div>
+                <InputText class="form-control" placeholder="Device Cell Number"
+                           aria-describedby="basic-addon1" @bind-Value="@GetDataFromID.CellNumber"></InputText>
+                <ValidationMessage For="()=>GetDataFromID.CellNumber"></ValidationMessage>
+            </div>
+        </div>
 
-@if(Show)
-{
-    <div class="modal" tabindextabindex="-1" style="display:block;background:rgba(205,205,205,0.5);" role="dialog">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document"> 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete</h4>
-                </div>
+        <div class="form-group py-2">
+            <button type="submit" class="btn btn-warning">Update Data</button>
+            <button type="button" class="btn btn-danger" @onclick="@(()=>showDelete(GetDataFromID.DevId))">Delete Data</button>
+            <NavLink href="/" class="btn btn-secondary">Go Back</NavLink>
+        </div>
 
-                <div class="modal-body">
-                    <span>Are you sure you want to delete the record</span>
-                </div>
+    </EditForm>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="ClosePopUp">No</button>
-                    <button type="button" class="btn btn-danger" @onclick="()=>Confirmation(true)">Yes</button>
+    @if (Show)
+    {
+        <div class="modal" tabindextabindex="-1" style="display:block;background:rgba(205,205,205,0.5);" role="dialog">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <span>Are you sure you want to delete the record</span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="ClosePopUp">No</button>
+                        <button type="button" class="btn btn-danger" @onclick="()=>Confirmation(true)">Yes</button>
+                    </div>
                 </div>
             </div>
-        </div>   
-    </div>
-}
+        </div>
+    }
+
+</div>
 
 @code {
     public void showDelete(string DevID) 

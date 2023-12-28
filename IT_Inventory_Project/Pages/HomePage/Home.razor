@@ -1,5 +1,4 @@
 ﻿@page "/"
-
 @using ClosedXML.Excel
 @using Newtonsoft.Json;
 @using IT_Inventory_Project.Data
@@ -104,8 +103,9 @@
                                 <button id="editBtn" @onclick="EventCallback.Factory.Create(this, ()=>GoToEditPage(item.DevId))">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </button>
-                                <button id="deleteBtn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    <i class="fa fa-trash" aria-hidden="true" @onclick="@(()=>ShowDelete(item.DevId))"></i>
+                                <button id="deleteBtn" type="button" data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal" @onclick="@(()=>ShowDelete(item.DevId))">
+                                    <i class="fa fa-trash" aria-hidden="true" ></i>
                                 </button>
                             </td>
                         </tr>

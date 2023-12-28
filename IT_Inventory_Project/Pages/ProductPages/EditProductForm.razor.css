@@ -1,0 +1,17 @@
+﻿.card-title {
+    font-size: 15px;
+    position: relative;
+    display: block;
+}
+
+.mb-3 > .form-label {
+    font-size:14px;
+}
+
+.mb-3 > .form-control {
+    font-size:11px;
+}
+
+InputText {
+    border: 2px solid red;
+}
