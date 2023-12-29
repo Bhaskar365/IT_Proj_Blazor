@@ -5,13 +5,127 @@
 }
 
 .mb-3 > .form-label {
-    font-size:14px;
+    font-size:10px;
 }
 
 .mb-3 > .form-control {
-    font-size:11px;
+    font-size: 11px;
 }
 
-InputText {
-    border: 2px solid red;
+    #purchaseDate .form-control,
+    #purchaseDate InputDate.form-control {
+        font-size: 11px !important;
+    }
+
+#footer-buttons > button 
+{
+    padding:4px;
+    font-size:10px;
 }
+
+#footer-buttons > #goBack 
+{
+    padding:3px;
+    font-size:10px;   
+}
+
+@media screen and (min-width:400px) {
+
+    .mb-3 > .form-label {
+        font-size:11px;
+    }
+
+    #footer-buttons > button {
+        font-size: 10px;
+    }
+
+    #footer-buttons > #goBack {
+        font-size: 10px ;
+    }
+}
+
+@media screen and (min-width:520px) {
+
+    .mb-3 .form-label {
+        font-size:12px;
+    }
+
+    .mb-3 .form-control {
+        font-size: 12px;
+    }
+
+    #footer-buttons > button {
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    #footer-buttons > #goBack {
+        padding: 4px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (min-width:641px) {
+
+    .card-title {
+       font-size:17px;
+    }
+
+    #footer-buttons > button {
+        padding: 5px;
+        font-size: 11px;
+    }
+
+    #footer-buttons > #goBack {
+        padding: 5px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width:786px) {
+    
+    .card-title {
+        font-size: 18px;
+    }
+
+    #footer-buttons > button {
+        width: 21%;
+        font-size: 12px;
+    }
+
+    #footer-buttons > #goBack {
+        width: 21%;
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width:996px) {
+
+    .card-title {
+        font-size:19px;
+    }
+}
+
+@media screen and (min-width:1080px) {
+
+    .card-title {
+        font-size: 20px;
+    }
+
+    #footer-buttons > button {
+        width: 22%;
+        font-size: 13px;
+    }
+
+    #footer-buttons > #goBack {
+        width: 22%;
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width:1170px) {
+
+
+
+}
+
