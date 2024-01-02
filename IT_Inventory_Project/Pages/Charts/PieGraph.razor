@@ -2,5 +2,60 @@
 
 <p>Pie Graph</p> 
 
+@inject IJSRuntime JSRuntime
+
+<canvas id="@Id"></canvas>
+
+<Chart Id="myChart" Type="@Chart.ChartType.Pie" Data="@(new[] { "1", "2" })" BackgroundColor="@(new[] { "blue", "green" })" Labels="@(new[] { "Fail", "Ok" })"></Chart>
+
 @code {
+    public enum ChartType
+    {
+        Pie,
+        Bar
+    }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public ChartType Type { get; set; }
+
+    [Parameter]
+    public string[] Data { get; set; }
+
+    [Parameter]
+    public string[] BackgroundColor { get; set; }
+
+    [Parameter]
+    public string[] Labels { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var config = new
+        {
+            Type = Type.ToString().ToLower(),
+            Options = new
+            {
+                Responsive = true,
+                Scales = new
+                {
+                    YAxes = new[]
+                    {
+                        new { Ticks = new { BeginAtZero = true } }
+                    }
+                }
+            },
+            Data = new
+            {
+                Datasets = new[]
+                {
+                    new { Data = Data, BackgroundColor = BackgroundColor }
+                },
+                Labels = Labels
+            }
+        };
+
+        await JSRuntime.InvokeVoidAsync("setup", Id, config);
+    }
 }
