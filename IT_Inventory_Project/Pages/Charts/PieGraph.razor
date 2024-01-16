@@ -1,61 +1,127 @@
 ﻿@page "/piegraph";
+@using IT_Inventory_Project.Data
+@using MudBlazor
+@using Newtonsoft.Json
+@using System.Collections
+@inject HttpClient Http;
 
-<p>Pie Graph</p> 
+<p>Pie Graph</p>
 
-@inject IJSRuntime JSRuntime
+<MudPaper Class="pa-4">
+    <MudChart ChartType="ChartType.Pie" InputData="@data" @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />
+</MudPaper>
+<MudPaper Class="pa-4 mt-2 d-flex justify-center">
+    <MudButton OnClick="AddDataSize" Variant="Variant.Filled" Color="Color.Primary">Add</MudButton>
+    <MudButton @onclick="RandomizeData" Variant="Variant.Filled" Class="mx-4">Randomize</MudButton>
+    <MudButton OnClick="RemoveDataSize" Variant="Variant.Filled" Color="Color.Secondary">Remove</MudButton>
+</MudPaper>
+<MudText Typo="Typo.h6">Selected portion of the chart: @Index</MudText>
 
-<canvas id="@Id"></canvas>
 
-<Chart Id="myChart" Type="@Chart.ChartType.Pie" Data="@(new[] { "1", "2" })" BackgroundColor="@(new[] { "blue", "green" })" Labels="@(new[] { "Fail", "Ok" })"></Chart>
-
-@code {
-    public enum ChartType
+    @code
     {
-        Pie,
-        Bar
+    private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+    int dataSize = 4;
+    double[] data = { 77, 25, 20, 5 };
+    string[] labels = { "Uranium", "Plutonium", "Thorium", "Caesium", "Technetium", "Promethium",
+                        "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Protactinium",
+                        "Neptunium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Mudblaznium" };
+
+    Random random = new Random();
+
+    void RandomizeData()
+    {
+        var new_data = new double[dataSize];
+        for (int i = 0; i < new_data.Length; i++)
+            new_data[i] = random.NextDouble() * 100;
+        data = new_data;
+        StateHasChanged();
     }
 
-    [Parameter]
-    public string Id { get; set; }
-
-    [Parameter]
-    public ChartType Type { get; set; }
-
-    [Parameter]
-    public string[] Data { get; set; }
-
-    [Parameter]
-    public string[] BackgroundColor { get; set; }
-
-    [Parameter]
-    public string[] Labels { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    void AddDataSize()
     {
-        var config = new
+        if (dataSize < 20)
         {
-            Type = Type.ToString().ToLower(),
-            Options = new
-            {
-                Responsive = true,
-                Scales = new
-                {
-                    YAxes = new[]
-                    {
-                        new { Ticks = new { BeginAtZero = true } }
-                    }
-                }
-            },
-            Data = new
-            {
-                Datasets = new[]
-                {
-                    new { Data = Data, BackgroundColor = BackgroundColor }
-                },
-                Labels = Labels
-            }
-        };
+            dataSize = dataSize + 1;
+            RandomizeData();
+        }
+    }
+    void RemoveDataSize()
+    {
+        if (dataSize > 0)
+        {
+            dataSize = dataSize - 1;
+            RandomizeData();
+        }
+    }
 
-        await JSRuntime.InvokeVoidAsync("setup", Id, config);
+    public List<Device_GetAll> GetAll = new List<Device_GetAll>();
+
+    public async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+                    new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+            };
+
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+        }
+    }
+
+    ArrayList deviceCounts;
+
+
+    public int server = 0;
+    public int misc = 0;
+    public int polycom = 0;
+    public int laptop_desktop = 0;
+    public int phone = 0;
+    public int monitor = 0;
+    public int printer = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllData();
+        await GetChartDetails();
+        deviceCounts = new ArrayList() { server, misc, polycom, laptop_desktop, phone, monitor, printer };
+
+    }
+
+
+     // Initialize counts for laptop, server, misc, polycom
+
+    public async Task GetChartDetails()
+    {
+        foreach (var x in GetAll)
+        {
+            if (!string.IsNullOrWhiteSpace(x.DevType))
+            {
+                switch (x.DevType.ToLower())
+                {
+                    case "laptop":
+                        deviceCounts[0] = (int)deviceCounts[0] + 1;
+                        break;
+                    case "server":
+                        deviceCounts[1] = (int)deviceCounts[1] + 1;
+                        break;
+                    case "misc":
+                        deviceCounts[2] = (int)deviceCounts[2] + 1;
+                        break;
+                    case "polycom":
+                        deviceCounts[3] = (int)deviceCounts[3] + 1;
+                        break;
+                        // Add more cases for other device types if needed
+                }
+            }
+        }
     }
 }
+
+
+
