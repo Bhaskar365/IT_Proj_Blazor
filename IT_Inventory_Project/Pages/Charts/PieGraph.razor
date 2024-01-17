@@ -8,53 +8,22 @@
 <p>Pie Graph</p>
 
 <MudPaper Class="pa-4">
-    <MudChart ChartType="ChartType.Pie" InputData="@data" @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />
-</MudPaper>
-<MudPaper Class="pa-4 mt-2 d-flex justify-center">
-    <MudButton OnClick="AddDataSize" Variant="Variant.Filled" Color="Color.Primary">Add</MudButton>
-    <MudButton @onclick="RandomizeData" Variant="Variant.Filled" Class="mx-4">Randomize</MudButton>
-    <MudButton OnClick="RemoveDataSize" Variant="Variant.Filled" Color="Color.Secondary">Remove</MudButton>
+    
+    <MudChip Color="Color.Primary">Laptop : @laptop_desktop</MudChip>
+    <MudChip Color="Color.Secondary">Server : @server</MudChip>
+    <MudChip Color="Color.Info">Misc : @misc</MudChip>
+    <MudChip Color="Color.Success">Polycom : @polycom</MudChip>
+    <MudChip Color="Color.Warning">Phone : @phone</MudChip>
+    <MudChip Color="Color.Error">Monitor : @monitor</MudChip>
+    <MudChip Color="Color.Dark">Printer : @printer</MudChip>
+
+    <MudChart ChartType="ChartType.Pie" InputData="@deviceCounts"
+              @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />
 </MudPaper>
 <MudText Typo="Typo.h6">Selected portion of the chart: @Index</MudText>
 
-
-    @code
-    {
-    private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
-    int dataSize = 4;
-    double[] data = { 77, 25, 20, 5 };
-    string[] labels = { "Uranium", "Plutonium", "Thorium", "Caesium", "Technetium", "Promethium",
-                        "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Protactinium",
-                        "Neptunium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Mudblaznium" };
-
-    Random random = new Random();
-
-    void RandomizeData()
-    {
-        var new_data = new double[dataSize];
-        for (int i = 0; i < new_data.Length; i++)
-            new_data[i] = random.NextDouble() * 100;
-        data = new_data;
-        StateHasChanged();
-    }
-
-    void AddDataSize()
-    {
-        if (dataSize < 20)
-        {
-            dataSize = dataSize + 1;
-            RandomizeData();
-        }
-    }
-    void RemoveDataSize()
-    {
-        if (dataSize > 0)
-        {
-            dataSize = dataSize - 1;
-            RandomizeData();
-        }
-    }
-
+@code
+{
     public List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
     public async Task GetAllData()
@@ -62,7 +31,7 @@
         var tokenKey = new[]
         {
                     new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
-            };
+        };
 
         string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
         var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
@@ -74,8 +43,7 @@
         }
     }
 
-    ArrayList deviceCounts;
-
+    double[] deviceCounts;
 
     public int server = 0;
     public int misc = 0;
@@ -85,42 +53,52 @@
     public int monitor = 0;
     public int printer = 0;
 
+    private int Index = -1;
+    string[] labels = { "Laptop/Desktop", "Misc", "Mobile/Phone", "Monitor", "Polycom", "Printer", "Server" };
+
     protected override async Task OnInitializedAsync()
     {
         await GetAllData();
         await GetChartDetails();
-        deviceCounts = new ArrayList() { server, misc, polycom, laptop_desktop, phone, monitor, printer };
-
+        deviceCounts = new double[] { server, misc, polycom, laptop_desktop, phone, monitor, printer };
     }
 
-
-     // Initialize counts for laptop, server, misc, polycom
-
+    // Initialize counts for laptop, server, misc, polycom
     public async Task GetChartDetails()
     {
         foreach (var x in GetAll)
         {
-            if (!string.IsNullOrWhiteSpace(x.DevType))
+            if (x.DevType == "Laptop/Desktop")
             {
-                switch (x.DevType.ToLower())
-                {
-                    case "laptop":
-                        deviceCounts[0] = (int)deviceCounts[0] + 1;
-                        break;
-                    case "server":
-                        deviceCounts[1] = (int)deviceCounts[1] + 1;
-                        break;
-                    case "misc":
-                        deviceCounts[2] = (int)deviceCounts[2] + 1;
-                        break;
-                    case "polycom":
-                        deviceCounts[3] = (int)deviceCounts[3] + 1;
-                        break;
-                        // Add more cases for other device types if needed
-                }
+                this.laptop_desktop++;
+            }
+            else if (x.DevType == "Misc")
+            {
+                this.misc++;
+            }
+            else if (x.DevType == "Mobile/Phone")
+            {
+                this.phone++;
+            }
+            else if (x.DevType == "Monitor")
+            {
+                this.monitor++;
+            }
+            else if (x.DevType == "Polycom")
+            {
+                this.polycom++;
+            }
+            else if (x.DevType == "Printer")
+            {
+                this.printer++;
+            }
+            else if (x.DevType == "Server")
+            {
+                this.server++;
             }
         }
     }
+
 }
 
 
