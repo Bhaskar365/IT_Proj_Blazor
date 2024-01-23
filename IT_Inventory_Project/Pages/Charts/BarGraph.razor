@@ -1,12 +1,10 @@
-﻿@page "/piegraph";
+﻿@page "/bargraph"
 @using IT_Inventory_Project.Data
 @using MudBlazor
 @using Newtonsoft.Json
 @using System.Collections
 @inject HttpClient Http;
-
-<p>Pie Graph</p>
-
+ 
 <MudPaper Class="pa-4">
         <MudChip Color="Color.Info">Laptop : @laptop_desktop</MudChip>
         <MudChip Color="Color.Success">Server : @server</MudChip>
@@ -16,13 +14,11 @@
         <MudChip Color="Color.Error" Style="background-color:#ff6f00">Monitor : @monitor</MudChip>
         <MudChip Color="Color.Primary">Printer : @printer</MudChip>
 
-        <MudChart ChartType="ChartType.Pie" InputData="@deviceCounts"
-                  @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />
-    </MudPaper>
-    <MudText Typo="Typo.h6">Selected portion of the chart: @Index</MudText>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" XAxisLabels="@labels" Width="100%" Height="350px">
+    </MudChart>
 
-    @code
-    {
+</MudPaper>
+    @code {
     public List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
     public async Task GetAllData()
@@ -42,25 +38,35 @@
         }
     }
 
-    double[] deviceCounts;
-
-    public int server = 0;
-    public int misc = 0;
-    public int polycom = 0;
-    public int laptop_desktop = 0;
-    public int phone = 0;
-    public int monitor = 0;
-    public int printer = 0;
+    public double server = 0;
+    public double misc = 0;
+    public double polycom = 0;
+    public double laptop_desktop = 0;
+    public double phone = 0;
+    public double monitor = 0;
+    public double printer = 0;
 
     private int Index = -1;
-    string[] labels = { "Laptop/Desktop", "Misc", "Mobile/Phone", "Monitor", "Polycom", "Printer", "Server" };
+    public string[] labels = { "Laptop/Desktop", "Misc", "Mobile/Phone", "Monitor", "Polycom", "Printer", "Server" };
 
     protected override async Task OnInitializedAsync()
     {
         await GetAllData();
         await GetChartDetails();
-        deviceCounts = new double[] { server, misc, polycom, laptop_desktop, phone, monitor, printer };
+
+        Series = new List<ChartSeries>()
+        {
+            new ChartSeries() { Name = "Laptop/Desktop", Data = new double[] { laptop_desktop } },
+            new ChartSeries() { Name = "Misc", Data = new double[] { misc } },
+            new ChartSeries() { Name = "Mobile/Phone", Data = new double[] { phone } },
+            new ChartSeries() { Name = "Monitor", Data = new double[] { monitor } },
+            new ChartSeries() { Name = "Polycom", Data = new double[] { polycom } },
+            new ChartSeries() { Name = "Printer", Data = new double[] { printer } },
+            new ChartSeries() { Name = "Server", Data = new double[] { server } },
+        };
     }
+
+    public List<ChartSeries> Series = new List<ChartSeries>();
 
     // Initialize counts for laptop, server, misc, polycom
     public async Task GetChartDetails()
