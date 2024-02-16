@@ -1,0 +1,96 @@
+﻿@* @page "/register"
+@using Employee_Manager_Client.Services
+@using Employee_Manager_Models.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@inject ApiService apiService;
+@inject ProtectedSessionStorage sessionStorage;
+@inject NavigationManager navManager;
+
+<div class="formBox">
+    <div class="formContainer">
+        <div class="form-inputBoxes">
+            <h1>Registration Form</h1>
+            <div>
+                @if (IsSuccessful)
+                {
+                    <div class="alert alert-success" role="alert">@message</div>
+                }
+                @if (IsUnsuccessful)
+                {
+                    <div class="alert alert-danger" role="alert">@message</div>
+                }
+            </div>
+            @if (registerModel != null)
+            {
+                <EditForm Model="@registerModel" OnValidSubmit="RegisterForm">
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+                    <div class="mb-3">
+                        <InputText type="name" class="form-control mb-3" placeholder="Name" 
+                                    @bind-Value="registerModel.Name">
+                        </InputText>
+                        <ValidationMessage For="@(()=> registerModel.Name)"></ValidationMessage>
+                    </div>
+
+                    <div class="mb-3">
+                        <InputText type="email" class="form-control mb-3"
+                                   id="exampleInputEmail1" aria-describedby="emailHelp"
+                                   placeholder="Email" @bind-Value="registerModel.Email">
+                        </InputText>
+                        <ValidationMessage For="@(() => registerModel.Email)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <InputText type="password" class="form-control mb-3"
+                                   id="exampleInputPassword1" placeholder="Password" @bind-Value="registerModel.Password">
+                        </InputText>
+                        <ValidationMessage For="@(() => registerModel.Password)" />
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100 registerBtn">Regiser</button>
+                    <br />
+                    <span class="registerTag">Already have a account ? <a href="login">Login</a></span>
+                </EditForm>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code 
+{
+    [CascadingParameter]
+    public EventCallback notify { get; set; }
+
+    public AdminInfo registerModel { get; set; }
+
+    public bool IsSuccessful { get; set; } = false;
+    public bool IsUnsuccessful { get; set; } = false;
+    public string? message { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        registerModel = new AdminInfo();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task RegisterForm()
+    {
+        var response = await apiService.Register(registerModel);
+        if (response.Status == true) 
+        {
+            IsSuccessful = true;
+            IsUnsuccessful = false;
+        }
+        else
+        {
+            IsSuccessful = false;
+            IsUnsuccessful = true;
+            message = response.Message;
+        }
+        await notify.InvokeAsync();
+        navManager.NavigateTo("/", true);
+    }
+}
+ *@

@@ -258,7 +258,7 @@
 
     protected async Task FilterUser()
     {
-        if (!string.IsNullOrEmpty(SearchString))
+        if (!string.IsNullOrWhiteSpace(SearchString))
         {
             //GetAll = GetAll.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
