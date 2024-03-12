@@ -260,13 +260,12 @@
     {
         if (!string.IsNullOrWhiteSpace(SearchString))
         {
-            //GetAll = GetAll.Where(x => x.Owner.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
-            //GetAll = searchUserData.Where(x => x.Location.ToLower().IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
             GetAll = GetAll.Where(x => x.Owner.ToLower().Contains(SearchString.ToLower()) || 
                                        x.DevType.ToLower().Contains(SearchString.ToLower()) ||
                                        x.Location.ToLower().Contains(SearchString.ToLower())
                                ).ToList();
-            UpdatePagedData();
+             //UpdatePagedData();
+            paginationTableData = GetAll;
         }
         else
         {
