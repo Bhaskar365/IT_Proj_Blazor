@@ -1,23 +1,27 @@
-﻿@page "/chartEx";
-
+﻿@page "/chartJSBarGraph";
+@* @using ChartJs.Blazor.Common
+@using ChartJs.Blazor.Common.Axes
+@using ChartJs.Blazor.LineChart
 @using IT_Inventory_Project.Data
 @using ChartJs.Blazor.PieChart
 @using ChartJs.Blazor.Util
 @using ChartJs.Blazor.Common
 @using MudBlazor
 @using Newtonsoft.Json
+
 @inject HttpClient Http;
 
 <MudChip Color="Color.Info">Laptop : @laptop_desktop</MudChip>
-<MudChip Color="Color.Success">Server : @server</MudChip>
-<MudChip Color="Color.Tertiary">Misc : @misc</MudChip>
-<MudChip Color="Color.Secondary">Polycom : @polycom</MudChip>
-<MudChip Color="Color.Warning" >Phone : @phone</MudChip>
-<MudChip Color="Color.Error" Style="background-color:#ff6f00">Monitor : @monitor</MudChip>
-<MudChip Color="Color.Primary">Printer : @printer</MudChip>
+    <MudChip Color="Color.Success">Server : @server</MudChip>
+    <MudChip Color="Color.Tertiary">Misc : @misc</MudChip>
+    <MudChip Color="Color.Secondary">Polycom : @polycom</MudChip>
+    <MudChip Color="Color.Warning">Phone : @phone</MudChip>
+    <MudChip Color="Color.Error" Style="background-color:#ff6f00">Monitor : @monitor</MudChip>
+    <MudChip Color="Color.Primary">Printer : @printer</MudChip>
 
-@if(_chartConfig!=null)
+    @if (_chartConfig != null)
 {
+
     <Chart Config="_chartConfig"></Chart>
 }
 
@@ -29,7 +33,7 @@
     {
         var tokenKey = new[]
         {
-            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+        new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
         };
 
         string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
@@ -52,6 +56,8 @@
     public int printer = 0;
 
     private PieConfig _chartConfig;
+
+    private Chart? _chart1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -82,15 +88,15 @@
         PieDataset<int> dataset = new PieDataset<int>(new[] { this.server, this.misc, this.polycom, this.laptop_desktop, this.phone, this.monitor, this.printer })
             {
                 BackgroundColor = new[]
-              {
-                ColorUtil.ColorHexString(255, 205, 86),
-                ColorUtil.ColorHexString(54, 162, 235),
-                ColorUtil.ColorHexString(255, 206, 186),
-                ColorUtil.ColorHexString(75, 192, 192),
-                ColorUtil.ColorHexString(153, 102, 255),
-                ColorUtil.ColorHexString(255, 159, 64),
-                ColorUtil.ColorHexString(123, 159, 63)
-              }
+                      {
+                    ColorUtil.ColorHexString(255, 205, 86),
+                    ColorUtil.ColorHexString(54, 162, 235),
+                    ColorUtil.ColorHexString(255, 206, 186),
+                    ColorUtil.ColorHexString(75, 192, 192),
+                    ColorUtil.ColorHexString(153, 102, 255),
+                    ColorUtil.ColorHexString(255, 159, 64),
+                    ColorUtil.ColorHexString(123, 159, 63)
+                  }
             };
 
         _chartConfig.Data.Datasets.Add(dataset);
@@ -133,6 +139,55 @@
         }
     }
 
+} *@
+
+@inject IJSRuntime JSRuntime
+
+<h3>Bar Chart Example</h3>
+
+<canvas id="myBarChart" width="400" height="200"></canvas>
+
+@code {
+    private string ChartData => GetChartData();
+
+    private string GetChartData()
+    {
+        // Replace with your actual data (labels and values)
+        var labels = "['January', 'February', 'March', 'April', 'May']";
+        var data = "[65, 59, 80, 81, 56]";
+
+        return $@"
+        {{
+            type: 'bar',
+            data: {{
+                labels: {labels},
+                datasets: [{{
+                    label: 'My Data',
+                    data: {data},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }}]
+            }},
+            options: {{
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {{
+                    y: {{
+                        beginAtZero: true
+                    }}
+                }}
+            }}
+        }}";
+    }
 
 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("createBarChart", "myBarChart", ChartData);
+        }
+    }
 }

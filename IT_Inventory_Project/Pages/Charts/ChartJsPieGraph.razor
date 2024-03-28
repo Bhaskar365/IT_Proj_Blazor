@@ -1,0 +1,138 @@
+﻿@page "/chartJSPieGraph";
+
+@using IT_Inventory_Project.Data
+@using ChartJs.Blazor.PieChart
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.Common
+@using MudBlazor
+@using Newtonsoft.Json
+@inject HttpClient Http;
+
+<MudChip Color="Color.Info">Laptop : @laptop_desktop</MudChip>
+<MudChip Color="Color.Success">Server : @server</MudChip>
+<MudChip Color="Color.Tertiary">Misc : @misc</MudChip>
+<MudChip Color="Color.Secondary">Polycom : @polycom</MudChip>
+<MudChip Color="Color.Warning" >Phone : @phone</MudChip>
+<MudChip Color="Color.Error" Style="background-color:#ff6f00">Monitor : @monitor</MudChip>
+<MudChip Color="Color.Primary">Printer : @printer</MudChip>
+
+@if(_chartConfig!=null)
+{
+    <Chart Config="_chartConfig"></Chart>
+}
+
+@code {
+
+    public List<Device_GetAll> GetAll = new List<Device_GetAll>();
+
+    public async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+        };
+
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+        }
+    }
+
+
+    public int server = 0;
+    public int misc = 0;
+    public int polycom = 0;
+    public int laptop_desktop = 0;
+    public int phone = 0;
+    public int monitor = 0;
+    public int printer = 0;
+
+    private PieConfig _chartConfig;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllData();
+        await GetChartDetails();
+
+        _chartConfig = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "% Developers Using Chart.js in Blazor"
+                    }
+                }
+            };
+
+        _chartConfig.Data.Labels.Add("Server");
+        _chartConfig.Data.Labels.Add("Misc");
+        _chartConfig.Data.Labels.Add("Polycom");
+        _chartConfig.Data.Labels.Add("Laptop/Desktop");
+        _chartConfig.Data.Labels.Add("Phone");
+        _chartConfig.Data.Labels.Add("Monitor");
+        _chartConfig.Data.Labels.Add("Printer");
+
+        PieDataset<int> dataset = new PieDataset<int>(new[] { this.server, this.misc, this.polycom, this.laptop_desktop, this.phone, this.monitor, this.printer })
+            {
+                BackgroundColor = new[]
+              {
+                ColorUtil.ColorHexString(255, 205, 86),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(255, 206, 186),
+                ColorUtil.ColorHexString(75, 192, 192),
+                ColorUtil.ColorHexString(153, 102, 255),
+                ColorUtil.ColorHexString(255, 159, 64),
+                ColorUtil.ColorHexString(123, 159, 63)
+              }
+            };
+
+        _chartConfig.Data.Datasets.Add(dataset);
+
+    }
+
+    // Initialize counts for laptop, server, misc, polycom
+    public async Task GetChartDetails()
+    {
+        foreach (var x in GetAll)
+        {
+            if (x.DevType == "Laptop/Desktop")
+            {
+                this.laptop_desktop++;
+            }
+            else if (x.DevType == "Misc")
+            {
+                this.misc++;
+            }
+            else if (x.DevType == "Mobile/Phone")
+            {
+                this.phone++;
+            }
+            else if (x.DevType == "Monitor")
+            {
+                this.monitor++;
+            }
+            else if (x.DevType == "Polycom")
+            {
+                this.polycom++;
+            }
+            else if (x.DevType == "Printer")
+            {
+                this.printer++;
+            }
+            else if (x.DevType == "Server")
+            {
+                this.server++;
+            }
+        }
+    }
+
+
+
+}
