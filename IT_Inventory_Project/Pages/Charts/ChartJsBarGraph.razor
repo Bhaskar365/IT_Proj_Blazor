@@ -139,7 +139,7 @@
         }
     }
 
-} *@
+}
 
 @inject IJSRuntime JSRuntime
 
@@ -148,6 +148,7 @@
 <canvas id="myBarChart" width="400" height="200"></canvas>
 
 @code {
+
     private string ChartData => GetChartData();
 
     private string GetChartData()
@@ -181,8 +182,6 @@
         }}";
     }
 
-
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -190,4 +189,26 @@
             await JSRuntime.InvokeVoidAsync("createBarChart", "myBarChart", ChartData);
         }
     }
+} *@
+
+
+@inject IJSRuntime JSRuntime
+
+<canvas id="myChart" width="100" height="100"></canvas>
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await CreateChart();
+        }
+    }
+
+    private async Task CreateChart()
+    {
+        await JSRuntime.InvokeVoidAsync("createChart");
+    }
+
 }
