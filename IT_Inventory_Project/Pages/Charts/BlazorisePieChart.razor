@@ -4,7 +4,7 @@
 @using Newtonsoft.Json
 @inject HttpClient Http;
 
-<h3>Blazorise Pie Chart</h3>
+<h3>Inventory Pie Graph</h3>
 
 <div class="btn btn-primary">
     <label for="startDate">Start Date:</label>
@@ -17,9 +17,7 @@
 
 <button class="btn btn-info" @onclick="FilterChartData">Apply Filter</button>
 
-<div id="pieChart">
-    <Blazorise.Charts.Chart @ref="pieChart" Type="ChartType.Pie" TItem="double" />
-</div>
+<Blazorise.Charts.Chart @ref="pieChart" Type="ChartType.Pie" TItem="double" class="custom-chart"/>
 
 @code {
     public DateTime startDate { get; set; } = DateTime.Now;
@@ -124,10 +122,4 @@
     {
         return GetAll.Count(device => device.DevType == type);
     }
-
-    public async Task Filter()
-    {
-        
-    }
-
 }
