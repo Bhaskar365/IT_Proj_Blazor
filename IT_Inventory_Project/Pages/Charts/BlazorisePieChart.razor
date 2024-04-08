@@ -6,12 +6,24 @@
 
 <h3>Blazorise Pie Chart</h3>
 
-<Blazorise.Charts.Chart @ref="pieChart" Type="ChartType.Pie" TItem="double" />
+<div class="btn btn-primary">
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" @bind="startDate" />
+</div>
+<div class="btn btn-secondary">
+    <label for="endDate">End Date:</label>
+    <input id="endDate" type="date" @bind="endDate" />
+</div>
 
-<input type="date" id="first" />
-<input type="date" id="last" />
+<button class="btn btn-info" @onclick="FilterChartData">Apply Filter</button>
+
+<div id="pieChart">
+    <Blazorise.Charts.Chart @ref="pieChart" Type="ChartType.Pie" TItem="double" />
+</div>
 
 @code {
+    public DateTime startDate { get; set; } = DateTime.Now;
+    public DateTime endDate { get; set; } = DateTime.Now;
 
     public List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
@@ -45,6 +57,14 @@
     async Task HandleRedraw()
     {
         await GetAllData();
+        await pieChart.Clear();
+        await pieChart.AddLabelsDatasetsAndUpdate(Labels, GetPieChartDataset());
+    }
+
+    private async Task FilterChartData()
+    {
+        await GetAllData();
+        GetAll = GetAll.Where(device => device.PurchaseDate >= startDate && device.PurchaseDate <= endDate).ToList();
         await pieChart.Clear();
         await pieChart.AddLabelsDatasetsAndUpdate(Labels, GetPieChartDataset());
     }
@@ -105,6 +125,9 @@
         return GetAll.Count(device => device.DevType == type);
     }
 
-
+    public async Task Filter()
+    {
+        
+    }
 
 }

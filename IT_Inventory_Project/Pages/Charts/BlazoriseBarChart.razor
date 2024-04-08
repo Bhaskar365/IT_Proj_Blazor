@@ -6,9 +6,23 @@
 
 <h3>blazoriseChart</h3>
 
+<div class="btn btn-primary">
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" @bind="startDate" />
+</div>
+<div class="btn btn-secondary">
+    <label for="endDate">End Date:</label>
+    <input id="endDate" type="date" @bind="endDate" />
+</div>
+
+<button class="btn btn-info" @onclick="FilterChartData">Apply Filter</button>
+
 <Blazorise.Charts.Chart @ref="barChart" Type="ChartType.Bar" TItem="double" /> 
 
 @code {
+
+    public DateTime startDate { get; set; } = DateTime.Now;
+    public DateTime endDate { get; set; } = DateTime.Now;
 
     public List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
@@ -85,6 +99,14 @@
         await barChart.AddLabelsDatasetsAndUpdate(Labels, GetBarChartDataset());
     }
 
+    private async Task FilterChartData()
+    {
+        await GetAllData();
+        GetAll = GetAll.Where(device => device.PurchaseDate >= startDate && device.PurchaseDate <= endDate).ToList();
+        await barChart.Clear();
+        await barChart.AddLabelsDatasetsAndUpdate(Labels, GetBarChartDataset());
+    }
+
     private BarChartDataset<double> GetBarChartDataset()
     {
         return new()
@@ -125,6 +147,4 @@
         ChartColor.FromRgba(153, 102, 255, 1f), 
         ChartColor.FromRgba(255, 159, 64, 1f) 
     };
-
-
 }
