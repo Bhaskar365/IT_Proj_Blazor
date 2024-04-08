@@ -1,4 +1,7 @@
 ﻿@page "/chartJSBarGraph";
+@using IT_Inventory_Project.Data
+@using System.Text.Json
+
 @* @using ChartJs.Blazor.Common
 @using ChartJs.Blazor.Common.Axes
 @using ChartJs.Blazor.LineChart
@@ -138,59 +141,59 @@
             }
         }
     }
-
 }
 
+
 @inject IJSRuntime JSRuntime
+@using Newtonsoft.Json;
+@inject HttpClient Http
 
 <h3>Bar Chart Example</h3>
 
-<canvas id="myBarChart" width="400" height="200"></canvas>
+<canvas id="myBarChart" width="100" height="100"></canvas>
 
-@code {
+@code 
+{
+    public List<Device_GetAll> GetAll = new List<Device_GetAll>();
 
-    private string ChartData => GetChartData();
-
-    private string GetChartData()
+    public async Task GetAllData()
     {
-        // Replace with your actual data (labels and values)
-        var labels = "['January', 'February', 'March', 'April', 'May']";
-        var data = "[65, 59, 80, 81, 56]";
+        var tokenKey = new[]
+        {
+        new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+        };
 
-        return $@"
-        {{
-            type: 'bar',
-            data: {{
-                labels: {labels},
-                datasets: [{{
-                    label: 'My Data',
-                    data: {data},
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }}]
-            }},
-            options: {{
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {{
-                    y: {{
-                        beginAtZero: true
-                    }}
-                }}
-            }}
-        }}";
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("createBarChart", "myBarChart", ChartData);
+            await CreateChart();
         }
     }
-} *@
 
+    protected override Task OnInitializedAsync()
+    {
+        CreateChart();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task CreateChart()
+    {
+        var data =  GetAllData(); // Fetch data from API
+        await JSRuntime.InvokeVoidAsync("createChartWithAPIData", data);
+    }
+}
+*@
 
 @inject IJSRuntime JSRuntime
 
@@ -208,7 +211,7 @@
 
     private async Task CreateChart()
     {
-        await JSRuntime.InvokeVoidAsync("createChart");
+        //await JSRuntime.InvokeVoidAsync("createChart");
+        await JSRuntime.InvokeVoidAsync("CreateChart");
     }
-
-}
+} 

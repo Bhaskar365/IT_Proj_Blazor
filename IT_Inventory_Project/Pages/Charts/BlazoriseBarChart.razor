@@ -1,0 +1,128 @@
+﻿@page "/barChart"
+@using Blazorise.Charts
+@using IT_Inventory_Project.Data
+@using Newtonsoft.Json
+@inject HttpClient Http;
+
+<h3>blazoriseChart</h3>
+
+<Blazorise.Charts.Chart @ref="barChart" Type="ChartType.Bar" TItem="double" /> 
+
+@code {
+
+    public List<Device_GetAll> GetAll = new List<Device_GetAll>();
+
+    public async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+        };
+
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+            foreach (var x in GetAll)
+            {
+                if (x.DevType == "Laptop/Desktop")
+                {
+                    this.laptop_desktop++;
+                }
+                else if (x.DevType == "Misc")
+                {
+                    this.misc++;
+                }
+                else if (x.DevType == "Mobile/Phone")
+                {
+                    this.phone++;
+                }
+                else if (x.DevType == "Monitor")
+                {
+                    this.monitor++;
+                }
+                else if (x.DevType == "Polycom")
+                {
+                    this.polycom++;
+                }
+                else if (x.DevType == "Printer")
+                {
+                    this.printer++;
+                }
+                else if (x.DevType == "Server")
+                {
+                    this.server++;
+                }
+            }
+        }
+    }
+
+    public double server = 0;
+    public double misc = 0;
+    public double polycom = 0;
+    public double laptop_desktop = 0;
+    public double phone = 0;
+    public double monitor = 0;
+    public double printer = 0;
+
+    Chart<double> barChart;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await HandleRedraw();
+        }
+    }
+
+    async Task HandleRedraw()
+    {
+        await GetAllData();
+        await barChart.Clear();
+        await barChart.AddLabelsDatasetsAndUpdate(Labels, GetBarChartDataset());
+    }
+
+    private BarChartDataset<double> GetBarChartDataset()
+    {
+        return new()
+            {
+                Label = "# of randoms",
+                Data = new List<double> 
+                { 
+                    this.server, 
+                    this.misc, 
+                    this.polycom, 
+                    this.laptop_desktop, 
+                    this.phone, 
+                    this.monitor, 
+                    this.printer 
+                },
+                BackgroundColor = backgroundColors,
+                BorderColor = borderColors,
+                BorderWidth = 1
+            };
+    }
+
+    string[] Labels = { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
+    List<string> backgroundColors = new List<string> 
+    { 
+        ChartColor.FromRgba(255, 99, 132, 0.2f), 
+        ChartColor.FromRgba(54, 162, 235, 0.2f), 
+        ChartColor.FromRgba(255, 206, 86, 0.2f), 
+        ChartColor.FromRgba(75, 192, 192, 0.2f), 
+        ChartColor.FromRgba(153, 102, 255, 0.2f), 
+        ChartColor.FromRgba(255, 159, 64, 0.2f) 
+    };
+    List<string> borderColors = new List<string> 
+    { 
+        ChartColor.FromRgba(255, 99, 132, 1f), 
+        ChartColor.FromRgba(54, 162, 235, 1f), 
+        ChartColor.FromRgba(255, 206, 86, 1f), 
+        ChartColor.FromRgba(75, 192, 192, 1f), 
+        ChartColor.FromRgba(153, 102, 255, 1f), 
+        ChartColor.FromRgba(255, 159, 64, 1f) 
+    };
+}
