@@ -1,0 +1,110 @@
+﻿@page "/pieChart"
+@using Blazorise.Charts
+@using IT_Inventory_Project.Data
+@using Newtonsoft.Json
+@inject HttpClient Http;
+
+<h3>Blazorise Pie Chart</h3>
+
+<Blazorise.Charts.Chart @ref="pieChart" Type="ChartType.Pie" TItem="double" />
+
+<input type="date" id="first" />
+<input type="date" id="last" />
+
+@code {
+
+    public List<Device_GetAll> GetAll = new List<Device_GetAll>();
+
+    public async Task GetAllData()
+    {
+        var tokenKey = new[]
+        {
+            new KeyValuePair<string,string>("token","A12F7A58-842D-4111-A44D-5F8C4E1AA521")
+        };
+
+        string Device_AddUrl = "https://tools.brandinstitute.com/wsInventory/wsInventory.asmx/Device_GetAll";
+        var httpResponse = await Http.PostAsync(Device_AddUrl, new FormUrlEncodedContent(tokenKey));
+
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            InventoryAPIResponse AddDataResponse = JsonConvert.DeserializeObject<InventoryAPIResponse>(await httpResponse.Content.ReadAsStringAsync());
+            GetAll = JsonConvert.DeserializeObject<List<Device_GetAll>>(AddDataResponse.Data);
+        }
+    }
+
+    Chart<double> pieChart;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await HandleRedraw();
+        }
+    }
+
+    async Task HandleRedraw()
+    {
+        await GetAllData();
+        await pieChart.Clear();
+        await pieChart.AddLabelsDatasetsAndUpdate(Labels, GetPieChartDataset());
+    }
+
+    private PieChartDataset<double> GetPieChartDataset()
+    {
+        return new()
+            {
+                Label = "# of devices",
+                Data = new List<double>
+                {
+                    this.server,
+                    this.misc,
+                    this.polycom,
+                    this.laptop_desktop,
+                    this.phone,
+                    this.monitor,
+                    this.printer
+                },
+                BackgroundColor = backgroundColors,
+                BorderColor = borderColors,
+                BorderWidth = 1
+            };
+    }
+
+    string[] Labels = { "Server", "Misc", "Polycom", "Laptop/Desktop", "Phone", "Monitor", "Printer" };
+    List<string> backgroundColors = new List<string>
+    {
+        ChartColor.FromRgba(255, 99, 132, 0.2f),
+        ChartColor.FromRgba(54, 162, 235, 0.2f),
+        ChartColor.FromRgba(255, 206, 86, 0.2f),
+        ChartColor.FromRgba(75, 192, 192, 0.2f),
+        ChartColor.FromRgba(153, 102, 255, 0.2f),
+        ChartColor.FromRgba(255, 159, 64, 0.2f),
+        ChartColor.FromRgba(204, 204, 255, 0.2f)
+    };
+    List<string> borderColors = new List<string>
+    {
+        ChartColor.FromRgba(255, 99, 132, 1f),
+        ChartColor.FromRgba(54, 162, 235, 1f),
+        ChartColor.FromRgba(255, 206, 86, 1f),
+        ChartColor.FromRgba(75, 192, 192, 1f),
+        ChartColor.FromRgba(153, 102, 255, 1f),
+        ChartColor.FromRgba(255, 159, 64, 1f),
+        ChartColor.FromRgba(153, 153, 255, 1f)
+    };
+
+    public double server => CountDevices("Server");
+    public double misc => CountDevices("Misc");
+    public double polycom => CountDevices("Polycom");
+    public double laptop_desktop => CountDevices("Laptop/Desktop");
+    public double phone => CountDevices("Mobile/Phone");
+    public double monitor => CountDevices("Monitor");
+    public double printer => CountDevices("Printer");
+
+    private double CountDevices(string type)
+    {
+        return GetAll.Count(device => device.DevType == type);
+    }
+
+
+
+}
