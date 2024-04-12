@@ -9,42 +9,46 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="addProductForm" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Add
+                    </NavLink>
+                </div>
 
-      <div class="nav-item px-3">
-            <NavLink class="nav-link" href="addProductForm" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Add
-            </NavLink>
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="barChart" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Bar Graph
+                    </NavLink>
+                </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="barChart" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Bar Graph
-            </NavLink>
-        </div>
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pieChart" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Pie Graph
-            </NavLink>
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="pieChart" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Pie Graph
+                    </NavLink>
+                </div>
 
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Identity/Account/Login" Match="NavLinkMatch.All">
-                <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Identity/Account/Logout" Match="NavLinkMatch.All">
-                <span class="oi oi-power-standby" aria-hidden="true"></span> Logout
-            </NavLink> 
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Identity/Account/Logout" Match="NavLinkMatch.All">
+                        <span class="oi oi-power-standby" aria-hidden="true"></span> Logout @context
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Identity/Account/Login" Match="NavLinkMatch.All">
+                        <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
     </nav>
 </div>
 

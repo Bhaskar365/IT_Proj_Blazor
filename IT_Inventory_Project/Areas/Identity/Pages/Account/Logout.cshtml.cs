@@ -30,6 +30,7 @@ namespace IT_Inventory_Project.Areas.Identity.Pages.Account
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);
+
             }
             else
             {
