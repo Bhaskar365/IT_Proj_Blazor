@@ -4,15 +4,23 @@ using Microsoft.AspNetCore.Components.Web;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using MudBlazor.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using IT_Inventory_Project.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("IT_Inventory_ProjectIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'IT_Inventory_ProjectIdentityDbContextConnection' not found.");
+
+builder.Services.AddDbContext<IT_Inventory_ProjectIdentityDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<IT_Inventory_ProjectIdentityDbContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<HttpClient>();
-builder.Services.AddMudServices();
 
 builder.Services
     .AddBlazorise(options =>
@@ -40,5 +48,6 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+app.UseAuthentication();;
 
 app.Run();
