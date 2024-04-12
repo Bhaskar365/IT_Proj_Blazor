@@ -17,6 +17,8 @@ builder.Services.AddDbContext<IT_Inventory_ProjectIdentityDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<IT_Inventory_ProjectIdentityDbContext>();
 
+builder.Services.AddAuthentication("Identity.Application").AddCookie();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -46,8 +48,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthorization();
+app.UseAuthentication();
+
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.UseAuthentication();;
 
 app.Run();
