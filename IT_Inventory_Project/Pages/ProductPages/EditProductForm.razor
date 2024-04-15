@@ -199,6 +199,10 @@
 </div>
 
 @code {
+
+    // [CascadingParameter]
+    // public Task<AuthenticationState> authenticationStateTask { get; set; }
+
     public void showDelete(string DevID)
     {
         DevID = DevId;
@@ -237,6 +241,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // var authenticationState = await authenticationStateTask;
+
+        // if(!authenticationState.User.Identity.IsAuthenticated) 
+        // {
+        //     navigate.NavigateTo("/identity/account/login");
+        // }
+
         await GetDataById();
     }
 
