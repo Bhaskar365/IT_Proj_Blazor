@@ -200,8 +200,8 @@
 
 @code {
 
-    // [CascadingParameter]
-    // public Task<AuthenticationState> authenticationStateTask { get; set; }
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationStateTask { get; set; }
 
     public void showDelete(string DevID)
     {
@@ -241,12 +241,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // var authenticationState = await authenticationStateTask;
+        var authenticationState = await authenticationStateTask;
 
-        // if(!authenticationState.User.Identity.IsAuthenticated) 
-        // {
-        //     navigate.NavigateTo("/identity/account/login");
-        // }
+        if(!authenticationState.User.Identity.IsAuthenticated) 
+        {
+            navigate.NavigateTo("/identity/account/login");
+        }
 
         await GetDataById();
     }
